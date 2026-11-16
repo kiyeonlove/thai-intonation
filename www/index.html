@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>타이 인터네이션 — 민트와 성조 공부</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;600;700&family=Noto+Sans+KR:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f6f1ea;--card:#fff;--ink:#2a2420;--sub:#6b6058;--line:#e6ddd2;
+  --mint:#1f9e89;--mint-d:#167a6a;--mint-l:#e3f4f0;--me:#fde7c8;--me-d:#b7791f;
+  --t0:#64748b;--t1:#2563eb;--t2:#dc2626;--t3:#d97706;--t4:#16a34a;--tn:#8b8178;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;height:100%}
+body{background:var(--bg);color:var(--ink);font-family:'Noto Sans KR',system-ui,sans-serif;font-size:18px;line-height:1.55}
+.th{font-family:'Leelawadee UI','Leelawadee','Noto Sans Thai',sans-serif}
+button{font:inherit;color:inherit;cursor:pointer}
+.app{max-width:600px;margin:0 auto;min-height:100%;display:flex;flex-direction:column}
+.hidden{display:none!important}
+
+/* ---------- home ---------- */
+.home{padding:20px 16px 40px}
+.hero{display:flex;gap:14px;align-items:center;background:var(--card);border-radius:20px;padding:16px;border:1px solid var(--line)}
+.hero h1{margin:0;font-size:24px}
+.hero p{margin:2px 0 0;color:var(--sub);font-size:16px}
+.sect{margin-top:22px}
+.sect h2{font-size:17px;color:var(--sub);margin:0 0 10px;font-weight:600}
+.day{width:100%;text-align:left;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;margin-bottom:12px;display:flex;align-items:center;gap:14px}
+.day:active{transform:scale(.99)}
+.day .num{flex:none;width:52px;height:52px;border-radius:14px;background:var(--mint-l);color:var(--mint-d);display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:700;line-height:1.1}
+.day .num small{font-size:12px;font-weight:600}
+.day .ttl{font-size:20px;font-weight:700}
+.day .ttl .th{font-size:21px}
+.day .desc{font-size:15px;color:var(--sub)}
+.day .done{margin-left:auto;flex:none;font-size:14px;color:var(--mint-d);font-weight:700}
+.opt{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:6px 16px}
+.optrow{padding:12px 0;border-bottom:1px solid var(--line)}
+.optrow:last-child{border-bottom:0}
+.optrow .lbl{font-weight:600;margin-bottom:8px}
+.seg{display:flex;gap:6px;flex-wrap:wrap}
+.seg button{flex:1;min-width:90px;border:1.5px solid var(--line);background:#fbf8f4;border-radius:12px;padding:10px 8px;font-size:16px}
+.seg button.on{border-color:var(--mint);background:var(--mint-l);color:var(--mint-d);font-weight:700}
+.legend{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.lg{display:flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:8px 10px;font-size:15px}
+.lg b{font-size:16px}
+.note{font-size:15px;color:var(--sub);background:#fff8e6;border:1px solid #f1dfae;border-radius:12px;padding:10px 12px;margin-top:12px}
+
+/* ---------- lesson ---------- */
+.lesson{display:flex;flex-direction:column;height:100vh;height:100dvh}
+.top{flex:none;display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--card);border-bottom:1px solid var(--line)}
+.top .back{border:0;background:#f1ebe3;border-radius:12px;padding:8px 12px;font-size:16px}
+.top .tt{flex:1;min-width:0}
+.top .tt b{display:block;font-size:17px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.prog{height:6px;background:#eee5da;border-radius:6px;overflow:hidden;margin-top:4px}
+.prog i{display:block;height:100%;background:var(--mint);width:0;transition:width .3s}
+.top .mode{border:1.5px solid var(--mint);background:var(--mint-l);color:var(--mint-d);border-radius:12px;padding:6px 10px;font-size:15px;font-weight:700}
+.log{flex:1;overflow-y:auto;padding:14px 12px 20px}
+.row{display:flex;gap:8px;margin:10px 0;align-items:flex-end}
+.row.me{justify-content:flex-end}
+.av{flex:none;width:40px;height:40px}
+.bub{max-width:85%;background:var(--card);border:1px solid var(--line);border-radius:18px 18px 18px 6px;padding:12px 14px}
+.row.me .bub{background:var(--me);border-color:#f3d3a3;border-radius:18px 18px 6px 18px}
+.bub .kr{font-size:19px}
+.bub .bigth{font-size:25px;line-height:1.45}
+.bub .smth{font-size:20px;margin-top:8px;padding-top:8px;border-top:1px dashed var(--line)}
+.bub .rom{font-size:16px;color:var(--sub)}
+.bub .ko{font-size:17px;margin-top:4px}
+.bub .say{border:0;background:none;padding:0;text-align:left}
+.bub .say:after{content:" 🔊";font-size:15px}
+.bub .reveal{margin-top:6px;border:1px solid var(--line);background:#fbf8f4;border-radius:10px;padding:4px 10px;font-size:15px}
+.bub .ans{margin-top:6px;font-size:16px;color:var(--mint-d);font-weight:600}
+.typing{display:inline-flex;gap:4px;padding:6px 2px}
+.typing i{width:8px;height:8px;border-radius:50%;background:#c9bdb0;animation:b 1s infinite}
+.typing i:nth-child(2){animation-delay:.15s}.typing i:nth-child(3){animation-delay:.3s}
+@keyframes b{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-5px)}}
+
+/* teach card */
+.teach{background:var(--card);border:2px solid var(--mint);border-radius:20px;padding:14px;margin:12px 0}
+.teach.me{border-color:var(--me-d)}
+.teach .who{font-size:14px;font-weight:700;color:var(--mint-d);margin-bottom:6px}
+.teach.me .who{color:var(--me-d)}
+.trow{padding:10px 0;border-bottom:1px dashed var(--line)}
+.trow:last-child{border-bottom:0}
+.chips{display:flex;flex-wrap:wrap;gap:6px;align-items:flex-end}
+.chip{border:0;background:#faf6f1;border-radius:14px;padding:6px 8px 4px;display:flex;flex-direction:column;align-items:center;min-width:54px;border-bottom:4px solid var(--c,var(--tn))}
+.chip:active{background:#efe6da}
+.chip .ct{font-size:36px;line-height:1.35;color:var(--c,var(--ink))}
+.chip .cr{font-size:15px;color:var(--ink)}
+.chip .cn{font-size:12px;font-weight:700;color:var(--c,var(--tn))}
+.chip svg{width:34px;height:16px;margin-top:1px}
+.tmeta{display:flex;align-items:center;gap:8px;margin-top:8px}
+.tmeta .m{flex:1;font-size:18px}
+.tmeta .pl{flex:none;border:0;background:var(--mint-l);color:var(--mint-d);border-radius:12px;padding:6px 12px;font-size:15px;font-weight:700}
+.teach.me .tmeta .pl{background:#fdf0dc;color:var(--me-d)}
+
+/* quiz listen card */
+.listen{background:var(--card);border:2px dashed var(--t3);border-radius:20px;padding:16px;margin:12px 0;text-align:center}
+.listen .q{font-size:42px;color:var(--tn)}
+.listen .big{border:0;background:#fff4e0;color:#9a5b06;border-radius:16px;padding:12px 20px;font-size:18px;font-weight:700}
+
+/* bottom bar */
+.bar{flex:none;background:var(--card);border-top:1px solid var(--line);padding:10px 12px calc(10px + env(safe-area-inset-bottom))}
+.bar .grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.bar .grid.one{grid-template-columns:1fr}
+.bar .grid.three{grid-template-columns:1fr 1fr 1fr}
+.btn{border:1.5px solid var(--line);background:#fbf8f4;border-radius:14px;padding:12px 8px;font-size:17px;line-height:1.3;min-height:54px}
+.btn small{display:block;font-size:13px;color:var(--sub)}
+.btn.pri{background:var(--mint);border-color:var(--mint);color:#fff;font-weight:700}
+.btn.pri small{color:#d8f3ed}
+.btn.reply{background:var(--me);border-color:#f3d3a3;text-align:left;padding:10px 14px}
+.btn.reply .th{font-size:21px}
+.btn.opt{font-size:18px}
+.btn.opt .th{font-size:21px}
+.btn.ok{background:#dcfce7;border-color:#16a34a}
+.btn.bad{background:#fee2e2;border-color:#dc2626}
+.btn:disabled{opacity:.55}
+.mini{display:flex;gap:8px;margin-bottom:8px}
+.mini button{flex:1;border:0;background:#f1ebe3;border-radius:12px;padding:8px;font-size:15px}
+.mini button .th{font-size:17px}
+.btn.mic{background:#fff1f2;border-color:#fb7185;color:#be123c;font-weight:700}
+.btn.mic small{color:#be123c}
+.btn.mic.rec{background:#e11d48;border-color:#e11d48;color:#fff;animation:pulse 1.2s infinite}
+.btn.mic.rec small{color:#ffe4e6}
+@keyframes pulse{50%{box-shadow:0 0 0 6px rgba(225,29,72,.22)}}
+.live{margin-top:8px;background:#fff7ed;border:1.5px dashed #fb923c;border-radius:12px;padding:8px 12px;font-size:21px;min-height:46px}
+.live small{display:block;font-size:13px;color:#9a5b06;font-family:'Noto Sans KR',sans-serif}
+.res .top2{display:flex;gap:12px;align-items:center;margin-bottom:6px}
+.res .sc{font-size:36px;font-weight:800;line-height:1}
+.res .sc small{font-size:14px;font-weight:600}
+.res .sc.g{color:#16a34a}.res .sc.m{color:#d97706}.res .sc.b{color:#dc2626}
+.res .hl{font-size:13px;color:#7a5a2a}
+.res .heard{font-size:21px}
+.res .chip{background:#fff;min-width:44px}
+.res .chip .ct{font-size:26px}
+.res .chip.hit{background:#dcfce7}
+.res .chip.miss{background:#fee2e2}
+.res .tip{font-size:14px;color:#7a5a2a;margin-top:4px}
+.diag{font-size:15px;margin-top:10px;line-height:1.7}
+.toast{position:fixed;left:50%;bottom:110px;transform:translate(-50%,30px);width:min(560px,92vw);background:#2a2420;color:#fff;border-radius:16px;padding:12px 14px;font-size:16px;opacity:0;pointer-events:none;transition:.25s;z-index:50}
+.toast.show{opacity:1;transform:translate(-50%,0);pointer-events:auto}
+.toast button{display:block;margin:8px 0 0 auto;border:0;background:#4b403a;color:#fff;border-radius:10px;padding:4px 12px;font-size:14px}
+.end{text-align:center;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:20px;margin:14px 0}
+.end h3{margin:6px 0;font-size:22px}
+</style>
+</head>
+<body>
+<div class="app" id="app">
+
+  <!-- HOME -->
+  <div class="home" id="home">
+    <div class="hero">
+      <div id="heroAv"></div>
+      <div>
+        <h1><span class="th">มิ้นท์</span> (민트)</h1><div style="font-size:14px;color:var(--mint-d);font-weight:700">타이 인터네이션</div>
+        <p>한국말 조금 하는 방콕 친구. 천천히 같이 성조 공부해요.</p>
+      </div>
+    </div>
+
+    <div class="sect">
+      <h2>소리 확인</h2>
+      <div class="opt" style="padding:12px 16px">
+        <button class="btn pri" id="testBtn" style="width:100%">🔊 소리 테스트 · 먼저 눌러 보세요</button>
+        <div class="diag" id="diag"></div>
+        <div class="hidden" id="diagAsk" style="font-size:15px;margin-top:8px;color:var(--sub)">
+          소리가 안 들리면: ① 휴대폰 <b>미디어 볼륨</b>을 올려요 ② Claude 앱 안이라면 링크를 <b>크롬 브라우저</b>로 열어요 ③ 아래 설정에서 "소리 엔진"을 바꿔 봐요
+        </div>
+      </div>
+    </div>
+
+    <div class="sect">
+      <h2>오늘 공부</h2>
+      <div id="dayList"></div>
+    </div>
+
+    <div class="sect">
+      <h2>설정</h2>
+      <div class="opt">
+        <div class="optrow">
+          <div class="lbl">민트의 말투</div>
+          <div class="seg" data-key="mode">
+            <button data-v="kr">한국말 섞어서</button>
+            <button data-v="th"><span class="th">ภาษาไทย</span>로만</button>
+          </div>
+        </div>
+        <div class="optrow">
+          <div class="lbl">태국어 말 빠르기</div>
+          <div class="seg" data-key="rate">
+            <button data-v="0.45">아주 천천히</button>
+            <button data-v="0.6">천천히</button>
+            <button data-v="0.8">보통</button>
+          </div>
+        </div>
+        <div class="optrow">
+          <div class="lbl">한국어 뜻</div>
+          <div class="seg" data-key="meaning">
+            <button data-v="show">바로 보기</button>
+            <button data-v="tap">눌러서 보기</button>
+          </div>
+        </div>
+        <div class="optrow" id="engRow">
+          <div class="lbl">소리 엔진</div>
+          <div class="seg" data-key="engine">
+            <button data-v="auto">자동</button>
+            <button data-v="web">휴대폰 음성</button>
+            <button data-v="claude">Claude 음성</button>
+          </div>
+        </div>
+        <div class="optrow">
+          <div class="lbl">민트가 소리 내서 말하기</div>
+          <div class="seg" data-key="auto">
+            <button data-v="on">켜기</button>
+            <button data-v="off">끄기</button>
+          </div>
+        </div>
+      </div>
+      <div class="note hidden" id="voiceNote"></div>
+      <div class="note" id="micNote">🎤 마이크(발음 채점) 확인 중…</div>
+    </div>
+
+    <div class="sect">
+      <h2>성조 색깔 보는 법</h2>
+      <div class="legend" id="legend"></div>
+      <div class="note">글자 아래 색깔 줄과 선 모양이 성조예요. 글자 하나를 누르면 그 소리만 들려요.</div>
+    </div>
+  </div>
+
+  <!-- LESSON -->
+  <div class="lesson hidden" id="lesson">
+    <div class="top">
+      <button class="back" id="backBtn">← 처음</button>
+      <div class="tt"><b id="lsTitle"></b><div class="prog"><i id="progBar"></i></div></div>
+      <button class="mode" id="modeBtn"></button>
+    </div>
+    <div class="log" id="log"></div>
+    <div class="bar" id="bar"></div>
+  </div>
+</div>
+
+<script src="capacitor.js"></script>
+<script>
+/* ================= data ================= */
+const TN=[
+  {th:'สามัญ',ko:'평성',c:'--t0'},
+  {th:'เอก',ko:'1성',c:'--t1'},
+  {th:'โท',ko:'2성',c:'--t2'},
+  {th:'ตรี',ko:'3성',c:'--t3'},
+  {th:'จัตวา',ko:'4성',c:'--t4'}
+];
+const TDESC=['가운데 평평하게','낮게','올라갔다 뚝 떨어짐','높게','내려갔다 쭉 올라감'];
+const PATHS=['M3 9 L31 9','M3 11 L31 14','M3 7 Q12 1 31 14','M3 6 Q18 5 31 2','M3 10 Q14 16 31 2'];
+
+// "ไม้|máai|3 ใหม่|mài|1" -> syllables ; tone "-" = no single tone
+function S(str){return str.trim().split(/\s+/).map(p=>{const [t,r,n]=p.split('|');return {t,r,n:(n==='-'||n===undefined)?null:+n}})}
+const txt=s=>s.map(x=>x.t).join('');
+
+const PRAISE_REPEAT=[
+  {th:'เก่งมากค่ะ',rom:'kèng mâak khâ',ko:'잘했어요',kr:'잘했어요! 발음 좋아요.'},
+  {th:'ดีมากเลยค่ะ',rom:'dii mâak loei khâ',ko:'아주 좋아요',kr:'아주 좋아요~ 태국 사람 같아요, 헤헤.'},
+  {th:'ชัดมากค่ะ',rom:'chát mâak khâ',ko:'발음이 또렷해요',kr:'발음 깨끗해요!'}
+];
+const PRAISE_QUIZ=[
+  {th:'ถูกต้องค่ะ เก่งมาก',rom:'thùuk-tɔ̂ng khâ, kèng mâak',ko:'정답이에요, 잘했어요!',kr:'정답! 피 귀가 좋네요~'},
+  {th:'ใช่แล้วค่ะ',rom:'châi lɛ́ɛo khâ',ko:'맞아요',kr:'맞아요! 완벽해요.'},
+  {th:'เยี่ยมเลยค่ะ',rom:'yîam loei khâ',ko:'훌륭해요',kr:'와, 최고예요!'}
+];
+const WRONG={th:'ไม่เป็นไรค่ะ ฟังอีกทีนะคะ',rom:'mâi-pen-rai khâ, fang ìik thii ná khá',ko:'괜찮아요, 한 번 더 들어 봐요.',kr:'괜찮아요~ 틀려도 돼요. 한 번 더 들어 봐요.'};
+const HARD={th:'ไม่เป็นไรค่ะ ฟังช้าๆ ทีละพยางค์นะคะ',rom:'mâi-pen-rai khâ, fang cháa-cháa thii-lá pha-yaang ná khá',ko:'괜찮아요, 한 글자씩 천천히 들어 봐요.',kr:'괜찮아요~ 어려운 거 맞아요. 한 글자씩 천천히 다시 해요.'};
+
+const TONE_Q={th:'เสียงอะไรคะ',rom:'sǐang à-rai khá',ko:'무슨 성조예요?',kr:'잘 들어요… 이거 몇 성이에요?'};
+const MEAN_Q={th:'คำนี้แปลว่าอะไรคะ',rom:'kham níi plɛɛ wâa à-rai khá',ko:'이 말은 무슨 뜻이에요?',kr:'잘 들어요… 이거 무슨 뜻이에요?'};
+
+const DAYS=[
+{
+  id:'d1', title:'เสียงวรรณยุกต์ 5 เสียง', ko:'성조 다섯 개 이름 배우기',
+  steps:[
+    {k:'say',th:'สวัสดีค่ะพี่',rom:'sà-wàt-dii khâ phîi',ko:'안녕하세요, 피(형)!',kr:'피~ 안녕하세요! 나 민트예요. 한국말 조금 해요, 헤헤.',
+      replies:[{th:'สวัสดีครับ',rom:'sà-wàt-dii khráp',ko:'안녕하세요'}]},
+    {k:'say',th:'หนูชื่อมิ้นท์ค่ะ เป็นคนกรุงเทพฯ',rom:'nǔu chʉ̂ʉ mín khâ, pen khon krung-thêep',ko:'제 이름은 민트예요. 방콕 사람이에요.',kr:'나는 방콕 사람이에요. 피 태국말 공부하죠? 내가 도와줄게요!'},
+    {k:'say',th:'วันนี้เราเรียนเสียงวรรณยุกต์กันนะคะ',rom:'wan-níi rao rian sǐang wan-ná-yúk kan ná khá',ko:'오늘은 같이 성조를 배워요.',kr:'오늘은 성조 공부! 태국말로 \'씨앙 완나윳\'이라고 해요.'},
+    {k:'teach',who:'friend',rows:[{s:S('เสียง|sǐang|4 วรรณยุกต์|wan-ná-yúk|-'),ko:'성조 (เสียง = 소리)'}]},
+    {k:'say',th:'ภาษาไทยมีห้าเสียงค่ะ',rom:'phaa-sǎa thai mii hâa sǐang khâ',ko:'태국어는 성조가 다섯 개예요.',kr:'태국말 성조는 다섯 개! 하나씩 천천히 해요.'},
+
+    {k:'say',th:'เสียงที่หนึ่ง เสียงสามัญค่ะ',rom:'sǐang thîi nʉ̀ng, sǐang sǎa-man khâ',ko:'첫 번째, 평성이에요.',kr:'첫 번째는 \'씨앙 싸-만\', 평성이에요. 평평하게~ 올라가지도 내려가지도 않아요.'},
+    {k:'teach',who:'friend',rows:[{s:S('เสียง|sǐang|4 สา|sǎa|4 มัญ|man|0'),ko:'평성의 태국어 이름'},{s:S('กา|kaa|0'),ko:'예: 까- (평성)'}]},
+    {k:'say',th:'เสียงที่สอง เสียงเอกค่ะ',rom:'sǐang thîi sɔ̌ɔng, sǐang èek khâ',ko:'두 번째, 1성이에요.',kr:'두 번째는 \'씨앙 엑\', 1성. 낮~게, 바닥에서 말해요.'},
+    {k:'teach',who:'friend',rows:[{s:S('เสียง|sǐang|4 เอก|èek|1'),ko:'1성의 태국어 이름'},{s:S('ก่า|kàa|1'),ko:'예: 까 (1성, 낮게)'}]},
+    {k:'say',th:'เสียงที่สาม เสียงโทค่ะ',rom:'sǐang thîi sǎam, sǐang thoo khâ',ko:'세 번째, 2성이에요.',kr:'세 번째는 \'씨앙 토\', 2성. 높이 올라갔다가 뚝! 떨어져요. 놀랄 때 \'아!\' 하는 느낌.'},
+    {k:'teach',who:'friend',rows:[{s:S('เสียง|sǐang|4 โท|thoo|0'),ko:'2성의 태국어 이름'},{s:S('ก้า|kâa|2'),ko:'예: 까 (2성, 떨어짐)'}]},
+    {k:'say',th:'เสียงที่สี่ เสียงตรีค่ะ',rom:'sǐang thîi sìi, sǐang trii khâ',ko:'네 번째, 3성이에요.',kr:'네 번째는 \'씨앙 뜨리\', 3성. 높~게, 목소리 조금 힘주고.'},
+    {k:'teach',who:'friend',rows:[{s:S('เสียง|sǐang|4 ตรี|trii|0'),ko:'3성의 태국어 이름'},{s:S('ก๊า|káa|3'),ko:'예: 까 (3성, 높게)'}]},
+    {k:'say',th:'เสียงที่ห้า เสียงจัตวาค่ะ',rom:'sǐang thîi hâa, sǐang jàt-ta-waa khâ',ko:'다섯 번째, 4성이에요.',kr:'마지막은 \'씨앙 짯따와\', 4성. 내려갔다가 쭉 올라가요. \'응?\' 하고 물어볼 때처럼.'},
+    {k:'teach',who:'friend',rows:[{s:S('เสียง|sǐang|4 จัต|jàt|1 วา|(ta)-waa|0'),ko:'4성의 태국어 이름'},{s:S('ก๋า|kǎa|4'),ko:'예: 까 (4성, 올라감)'}]},
+
+    {k:'say',th:'ตอนเด็ก คนไทยท่องแบบนี้ค่ะ',rom:'tɔɔn dèk khon thai thɔ̂ng bɛ̀ɛp níi khâ',ko:'태국 사람은 어릴 때 이렇게 외워요.',kr:'태국 애들은 어릴 때 이렇게 노래처럼 외워요. 같이 해 봐요!'},
+    {k:'teach',who:'friend',chant:true,rows:[{s:S('กา|kaa|0 ก่า|kàa|1 ก้า|kâa|2 ก๊า|káa|3 ก๋า|kǎa|4'),ko:'평성 · 1성 · 2성 · 3성 · 4성'}]},
+
+    {k:'say',th:'ทีนี้ ทายเสียงกันนะคะ',rom:'thii-níi thaai sǐang kan ná khá',ko:'이제 성조 맞히기 해요.',kr:'이제 퀴즈! 내가 말하면 몇 성인지 맞혀 봐요.'},
+    {k:'quiz',type:'tone',word:S('ก๊า|káa|3'),ans:3},
+    {k:'quiz',type:'tone',word:S('ก่า|kàa|1'),ans:1},
+    {k:'quiz',type:'tone',word:S('ก๋า|kǎa|4'),ans:4},
+    {k:'quiz',type:'tone',word:S('ก้า|kâa|2'),ans:2},
+    {k:'say',th:'คำจริงนะคะ ยากขึ้นนิดหนึ่ง',rom:'kham jing ná khá, yâak khʉ̂n nít-nʉ̀ng',ko:'이번엔 진짜 단어예요. 조금 더 어려워요.',kr:'이번엔 진짜 단어! 조금 어려워요~'},
+    {k:'quiz',type:'tone',word:S('ขา|khǎa|4'),ans:4,mean:'다리'},
+    {k:'quiz',type:'tone',word:S('ค่า|khâa|2'),ans:2,mean:'값, 요금'},
+    {k:'quiz',type:'tone',word:S('ค้า|kháa|3'),ans:3,mean:'장사하다'},
+
+    {k:'say',th:'ถ้าพี่ไม่รู้ ถามหนูแบบนี้นะคะ',rom:'thâa phîi mâi rúu, thǎam nǔu bɛ̀ɛp níi ná khá',ko:'모르면 저한테 이렇게 물어봐요.',kr:'모르는 단어 있으면 나한테 이렇게 물어봐요.'},
+    {k:'teach',who:'me',rows:[{s:S('คำ|kham|0 นี้|níi|3 เสียง|sǐang|4 อะ|à|1 ไร|rai|0 ครับ|khráp|3'),ko:'이 단어는 무슨 성조예요?'}]},
+    {k:'say',th:'แล้วหนูจะตอบว่า เสียงตรีค่ะ',rom:'lɛ́ɛo nǔu jà tɔ̀ɔp wâa, sǐang trii khâ',ko:'그럼 제가 "3성이에요"라고 대답해요.',kr:'그럼 내가 \'씨앙 뜨리 카\' 이렇게 대답해요.'},
+    {k:'teach',who:'me',rows:[{s:S('เสียง|sǐang|4 สา|sǎa|4 มัญ|man|0 หรือ|rʉ̌ʉ|4 เสียง|sǐang|4 เอก|èek|1 ครับ|khráp|3'),ko:'평성이에요, 1성이에요?'}]},
+    {k:'say',th:'วันนี้พอแค่นี้ค่ะ เก่งมากเลย พรุ่งนี้เจอกันนะคะ',rom:'wan-níi phɔɔ khɛ̂ɛ níi khâ, kèng mâak loei, phrûng-níi jəə kan ná khá',ko:'오늘은 여기까지! 정말 잘했어요. 내일 만나요.',kr:'오늘은 여기까지! 피 진짜 잘했어요. 내일 또 만나요~',
+      replies:[{th:'ขอบคุณครับ มิ้นท์',rom:'khɔ̀ɔp-khun khráp mín',ko:'고마워요, 민트'}]}
+  ]
+},
+{
+  id:'d2', title:'ช่วยฟังหน่อย', ko:'성조가 바뀌면 뜻이 바뀌어요 · 내 발음 들어 줘',
+  steps:[
+    {k:'say',th:'สวัสดีค่ะพี่ เมื่อวานเรียนห้าเสียง จำได้ไหมคะ',rom:'sà-wàt-dii khâ phîi, mʉ̂a-waan rian hâa sǐang, jam dâi mǎi khá',ko:'안녕하세요! 어제 성조 다섯 개 배웠죠. 기억나요?',kr:'피~ 또 왔네요! 어제 성조 다섯 개 배웠죠? 기억나요?',
+      replies:[
+        {th:'จำได้ครับ',rom:'jam dâi khráp',ko:'기억나요',resp:{th:'เก่งมากค่ะ',rom:'kèng mâak khâ',ko:'대단해요',kr:'오~ 대단해요! 그래도 한 번만 같이 해요.'}},
+        {th:'ลืมแล้วครับ',rom:'lʉʉm lɛ́ɛo khráp',ko:'잊어버렸어요',resp:{th:'ไม่เป็นไรค่ะ ทวนกันนะ',rom:'mâi-pen-rai khâ, thuan kan ná',ko:'괜찮아요, 같이 복습해요',kr:'괜찮아요~ 나도 영어 다 잊어요, 헤헤. 같이 복습해요.'}}
+      ]},
+    {k:'teach',who:'friend',chant:true,rows:[{s:S('กา|kaa|0 ก่า|kàa|1 ก้า|kâa|2 ก๊า|káa|3 ก๋า|kǎa|4'),ko:'평성 · 1성 · 2성 · 3성 · 4성'}]},
+    {k:'say',th:'วันนี้ เสียงเปลี่ยน ความหมายก็เปลี่ยนค่ะ',rom:'wan-níi sǐang plìan, khwaam-mǎai kɔ̂ plìan khâ',ko:'오늘은: 성조가 바뀌면 뜻도 바뀌어요.',kr:'오늘은 진짜 중요해요. 성조가 바뀌면 뜻도 바뀌어요!'},
+    {k:'teach',who:'friend',rows:[
+      {s:S('มา|maa|0'),ko:'오다'},
+      {s:S('หมา|mǎa|4'),ko:'개 (ห가 앞에 있어서 올라가요)'},
+      {s:S('ม้า|máa|3'),ko:'말 (동물)'}]},
+    {k:'say',th:'หมา กับ ม้า ไม่เหมือนกันนะคะ',rom:'mǎa kàp máa mâi mʉ̌an kan ná khá',ko:'개와 말은 달라요.',kr:'개랑 말, 완전 달라요! 틀리면 시장 아줌마가 웃어요, 헤헤.'},
+    {k:'quiz',type:'mean',word:S('ม้า|máa|3'),options:['오다','개','말 (동물)'],ans:2},
+    {k:'quiz',type:'mean',word:S('หมา|mǎa|4'),options:['오다','개','말 (동물)'],ans:1},
+    {k:'say',th:'อีกคู่หนึ่งนะคะ',rom:'ìik khûu nʉ̀ng ná khá',ko:'한 쌍 더 해요.',kr:'한 쌍 더! 이것도 많이 틀려요.'},
+    {k:'teach',who:'friend',rows:[
+      {s:S('ขาว|khǎao|4'),ko:'흰색'},
+      {s:S('ข่าว|khàao|1'),ko:'뉴스'}]},
+    {k:'say',th:'อันนี้คนเกาหลีพูดผิดบ่อยค่ะ',rom:'an níi khon kao-lǐi phûut phìt bɔ̀i khâ',ko:'이건 한국 사람이 자주 틀려요.',kr:'이건 한국 사람이 자주 틀려요. 천천히~'},
+    {k:'teach',who:'friend',rows:[
+      {s:S('เสือ|sʉ̌a|4'),ko:'호랑이'},
+      {s:S('เสื้อ|sʉ̂a|2'),ko:'옷'},
+      {s:S('ใกล้|klâi|2'),ko:'가깝다'},
+      {s:S('ไกล|klai|0'),ko:'멀다'}]},
+    {k:'quiz',type:'mean',word:S('เสื้อ|sʉ̂a|2'),options:['호랑이','옷'],ans:1},
+    {k:'quiz',type:'mean',word:S('ไกล|klai|0'),options:['가깝다','멀다'],ans:1},
+    {k:'quiz',type:'mean',word:S('ข่าว|khàao|1'),options:['흰색','뉴스'],ans:1},
+
+    {k:'say',th:'ถ้าอยากให้หนูฟัง พูดแบบนี้นะคะ',rom:'thâa yàak hâi nǔu fang, phûut bɛ̀ɛp níi ná khá',ko:'제가 들어 줬으면 하면 이렇게 말해요.',kr:'내가 피 발음 들어 줬으면 좋겠으면, 이렇게 말해요.'},
+    {k:'teach',who:'me',rows:[{s:S('ช่วย|chûai|2 ฟัง|fang|0 ผม|phǒm|4 ออก|òok|1 เสียง|sǐang|4 หน่อย|nɔ̀i|1 ได้|dâi|2 ไหม|mǎi|4 ครับ|khráp|3'),ko:'제 발음 좀 들어 줄 수 있어요?'}]},
+    {k:'teach',who:'me',rows:[{s:S('ผม|phǒm|4 ออก|òok|1 เสียง|sǐang|4 ถูก|thùuk|1 ไหม|mǎi|4 ครับ|khráp|3'),ko:'제 발음 맞아요?'}]},
+    {k:'say',th:'หนูอาจจะตอบแบบนี้ค่ะ',rom:'nǔu àat-jà tɔ̀ɔp bɛ̀ɛp níi khâ',ko:'제가 이렇게 대답할 수도 있어요.',kr:'그럼 내가 이렇게 대답할 수도 있어요. 잘 들어요!'},
+    {k:'teach',who:'friend',rows:[
+      {s:S('ถูก|thùuk|1 แล้ว|lɛ́ɛo|3'),ko:'맞아요'},
+      {s:S('เกือบ|kʉ̀ap|1 ถูก|thùuk|1 แล้ว|lɛ́ɛo|3'),ko:'거의 맞았어요'},
+      {s:S('ลอง|lɔɔng|0 ใหม่|mài|1'),ko:'다시 해 봐요'},
+      {s:S('เสียง|sǐang|4 ต้อง|tɔ̂ng|2 ขึ้น|khʉ̂n|2'),ko:'소리가 올라가야 해요'},
+      {s:S('เสียง|sǐang|4 ต้อง|tɔ̂ng|2 ลง|long|0'),ko:'소리가 내려가야 해요'}]},
+    {k:'quiz',type:'mean',word:S('เกือบ|kʉ̀ap|1 ถูก|thùuk|1 แล้ว|lɛ́ɛo|3'),options:['맞아요','거의 맞았어요','다시 해 봐요'],ans:1},
+    {k:'quiz',type:'mean',word:S('เสียง|sǐang|4 ต้อง|tɔ̂ng|2 ขึ้น|khʉ̂n|2'),options:['소리가 올라가야 해요','소리가 내려가야 해요'],ans:0},
+
+    {k:'say',th:'สุดท้าย ประโยคยากค่ะ',rom:'sùt-tháai, prà-yòok yâak khâ',ko:'마지막은 어려운 문장이에요.',kr:'마지막! 어려운 문장. 태국 사람들이 외국 사람한테 장난으로 시켜 봐요, 헤헤.'},
+    {k:'teach',who:'friend',rows:[{s:S('ไม้|máai|3 ใหม่|mài|1 ไม่|mâi|2 ไหม้|mâi|2 ไหม|mǎi|4'),ko:'새 나무는 안 타요? (나무·새·안·타다·질문)'}]},
+    {k:'say',th:'เก่งมากค่ะพี่ เดือนกุมภาพันธ์ เจอกันที่เมืองไทยนะคะ',rom:'kèng mâak khâ phîi, dʉan kum-phaa-phan jəə kan thîi mʉang thai ná khá',ko:'정말 잘했어요! 2월에 태국에서 만나요.',kr:'피 진짜 잘했어요! 2월에 태국 오면 나랑 태국말로 이야기해요~',
+      replies:[{th:'ขอบคุณครับ เจอกันครับ',rom:'khɔ̀ɔp-khun khráp, jəə kan khráp',ko:'고마워요, 만나요'}]}
+  ]
+}
+];
+
+/* ================= settings / storage ================= */
+const DEF={mode:'kr',rate:'0.6',meaning:'show',auto:'on',engine:'auto'};
+let set=Object.assign({},DEF), done={};
+try{Object.assign(set,JSON.parse(localStorage.getItem('mint_set')||'{}'))}catch(e){}
+try{done=JSON.parse(localStorage.getItem('mint_done')||'{}')}catch(e){}
+const save=()=>{try{localStorage.setItem('mint_set',JSON.stringify(set));localStorage.setItem('mint_done',JSON.stringify(done))}catch(e){}};
+
+/* ================= speech ================= */
+let voices=[];
+function loadV(){try{voices=speechSynthesis.getVoices()||[]}catch(e){voices=[]}}
+if('speechSynthesis' in window){loadV();try{speechSynthesis.onvoiceschanged=()=>{loadV();try{updDiag()}catch(e){}}}catch(e){}}
+function pick(lang){
+  const l=lang.toLowerCase();
+  return voices.find(v=>v.lang&&v.lang.toLowerCase().replace('_','-')===l)||voices.find(v=>v.lang&&v.lang.toLowerCase().startsWith(l.slice(0,2)));
+}
+/* ===== 안드로이드 앱(APK)일 때: 민트 플러그인 ===== */
+const NATIVE=!!(window.Capacitor&&typeof Capacitor.isNativePlatform==='function'&&Capacitor.isNativePlatform());
+let Mint=null, nInfo=null, nPending=null;
+if(NATIVE){try{Mint=Capacitor.registerPlugin('Mint')}catch(e){Mint=null}}
+function nRefresh(){if(!Mint)return Promise.resolve();return Mint.info().then(i=>{nInfo=i;try{updDiag()}catch(e){}}).catch(()=>{})}
+if(Mint){
+  try{Mint.addListener('ttsReady',e=>{nRefresh();if(e&&e.ready&&nPending){const l=nPending;nPending=null;speakNative(l)}})}catch(e){}
+  setTimeout(nRefresh,300);setTimeout(nRefresh,2000);
+}
+function speakNative(list){
+  speakSeq++;
+  Mint.speak({items:list.map(o=>({text:o.text,lang:o.lang,rate:o.rate,pitch:1.05}))}).then(()=>{
+    if(nInfo&&nInfo.ttsReady&&nInfo.thai===false&&list.some(o=>o.lang.startsWith('th')))soundMsg('nothai');
+  }).catch(err=>{
+    const m=String((err&&err.message)||err||'');
+    if(/tts_not_ready/.test(m)){nPending=list;nRefresh()}
+    else soundMsg('claudeerr');
+  });
+}
+function makeNativeDict(M){
+  let st='idle';const P=[],F=[],S=[];
+  const emit=(s,r)=>{st=s;S.forEach(h=>{try{h({state:s,reason:r})}catch(e){}})};
+  M.addListener('listen',e=>{if(st==='idle')return;if(e.state==='listening')emit('listening');else if(e.state==='finishing'&&st==='listening')emit('finishing')});
+  M.addListener('partial',e=>{if(st!=='idle')P.forEach(h=>h({text:e.text||''}))});
+  M.addListener('result',e=>{if(st==='idle')return;const t=(e.texts&&e.texts[0])||'';P.forEach(h=>h({text:''}));F.forEach(h=>h({text:t}));emit('idle','stopped')});
+  M.addListener('listenError',e=>{if(st==='idle')return;const c=+e.code;
+    if(c===6||c===7)emit('idle','stopped');            // 말이 없거나 못 알아들음 → 빈 결과
+    else if(c===9)emit('idle','not_granted');           // 권한 없음
+    else if(c===12||c===13)emit('idle','unavailable');  // 태국어 인식 미지원
+    else emit('idle','upstream_error')});
+  return{
+    start(){if(st!=='idle')return Promise.resolve();emit('starting');
+      return M.listen({lang:'th-TH'}).then(()=>{}).catch(err=>{const m=String((err&&err.message)||err||'');
+        const code=/not_granted/.test(m)?'not_granted':/unavailable/.test(m)?'unavailable':'upstream_error';
+        emit('idle',code);return Promise.reject({code,message:m})})},
+    stop(){if(st==='idle')return Promise.resolve();return M.stopListen().then(()=>{}).catch(()=>{})},
+    active(){return st!=='idle'},
+    onPartial(h){P.push(h);return()=>{}},onFinal(h){F.push(h);return()=>{}},onState(h){S.push(h);return()=>{}}
+  };
+}
+
+/* 두 가지 소리: ① 휴대폰(브라우저) 음성  ② Claude 음성(tts) — 안 되면 자동으로 바꿈 */
+let TTS=null, ttsChecked=false, webOK=null, speakSeq=0;
+const keepU=[];
+const hasWeb=()=>('speechSynthesis' in window)&&typeof SpeechSynthesisUtterance!=='undefined';
+function engine(){
+  if(NATIVE&&Mint)return 'native';
+  if(set.engine==='claude'&&TTS)return 'claude';
+  if(set.engine==='web')return hasWeb()?'web':(TTS?'claude':'none');
+  if(!hasWeb())return TTS?'claude':'none';
+  if(webOK===false&&TTS)return 'claude';
+  loadV();
+  if(voices.length&&!pick('th-TH')&&TTS)return 'claude';
+  return 'web';
+}
+function speak(list){
+  list=(list||[]).filter(o=>o&&o.text);
+  if(!list.length)return;
+  const e=engine();
+  if(e==='native')return speakNative(list);
+  if(e==='claude')return speakClaude(list);
+  if(e==='web')return speakWeb(list);
+  soundMsg('none');
+}
+function stopSound(){
+  speakSeq++;
+  if(Mint){try{Mint.stop().catch(()=>{})}catch(e){}return}
+  try{if(hasWeb())speechSynthesis.cancel()}catch(e){}
+  try{if(TTS&&TTS.active())TTS.stop().catch(()=>{})}catch(e){}
+}
+function speakWeb(list){
+  const ss=window.speechSynthesis;
+  const my=++speakSeq;
+  try{if(TTS&&TTS.active())TTS.stop().catch(()=>{})}catch(e){}
+  let started=false;
+  const go=()=>{
+    if(my!==speakSeq)return;
+    keepU.length=0;
+    list.forEach(o=>{
+      const u=new SpeechSynthesisUtterance(o.text);
+      u.lang=o.lang;const v=pick(o.lang);if(v)u.voice=v;
+      u.rate=o.rate;u.pitch=1.08;u.volume=1;
+      u.onstart=()=>{started=true;webOK=true;updDiag()};
+      u.onerror=ev=>{const er=ev&&ev.error;if(er==='interrupted'||er==='canceled')return;if(!started&&my===speakSeq)webFail(list)};
+      keepU.push(u);
+      try{ss.speak(u)}catch(err){webFail(list)}
+    });
+    try{ss.resume()}catch(e){}
+    if(webOK!==true)setTimeout(()=>{if(my===speakSeq&&!started&&webOK!==true)webFail(list)},3000);
+  };
+  try{if(ss.speaking||ss.pending){ss.cancel();setTimeout(go,180)}else go()}catch(e){webFail(list)}
+}
+function webFail(list){
+  if(webOK===false)return;
+  webOK=false;updDiag();
+  if(TTS){speakClaude(list);soundMsg('switched')}
+  else soundMsg('webfail');
+}
+const cRate=r=>r<=0.5?0.7:r<=0.65?0.75:r<=0.85?0.9:1;
+function speakClaude(list){
+  if(!TTS){soundMsg('none');return}
+  speakSeq++;
+  try{if(hasWeb())speechSynthesis.cancel()}catch(e){}
+  const lines=list.map(o=>({text:o.text,language:o.lang.slice(0,2),rate:o.lang.startsWith('th')?cRate(o.rate):1}));
+  TTS.speak(lines).catch(err=>{
+    const c=err&&err.code;
+    if(c==='stopped'||c==='busy'||c==='no_gesture')return;
+    if(c==='not_granted'||c==='unavailable'){TTS=null;updDiag();soundMsg('claudeoff')}
+    else if(c==='rate_limited')soundMsg('rate');
+    else soundMsg('claudeerr');
+  });
+}
+/* 알림(토스트) */
+const SOUNDMSG={
+  none:'이 화면에서는 소리를 낼 수 없어요. Claude 앱 안이라면 휴대폰 <b>크롬 브라우저</b>로 이 링크를 열어 주세요.',
+  webfail:'휴대폰 음성에서 소리가 안 나요. ① 미디어 볼륨 올리기 ② 설정 → 텍스트 음성 변환 → Google 음성 엔진 → 음성 데이터 설치 → <b>태국어</b> ③ 크롬 브라우저에서 열기',
+  switched:'휴대폰 음성이 안 돼서 <b>Claude 음성</b>으로 바꿨어요.',
+  claudeoff:'Claude 음성을 쓸 수 없어요. 처음 화면의 "소리 테스트"를 눌러 확인해 주세요.',
+  rate:'소리를 많이 들어서 잠깐 쉬어야 해요. 조금 뒤에 다시 눌러 주세요.',
+  claudeerr:'소리가 잠깐 안 나왔어요. 한 번 더 눌러 주세요.',
+  nothai:'휴대폰에 <b>태국어 음성</b>이 없어요. 처음 화면 "소리 확인"에서 [태국어 음성 설치]를 눌러 주세요.'
+};
+let lastToast={k:'',t:0};
+function soundMsg(k){
+  const now=Date.now();
+  if(lastToast.k===k&&now-lastToast.t<20000)return;
+  lastToast={k,t:now};
+  let t=$('toast');
+  if(!t){t=el('div','toast');t.id='toast';document.body.appendChild(t)}
+  t.innerHTML=SOUNDMSG[k]+'<button>닫기</button>';
+  t.querySelector('button').onclick=()=>t.classList.remove('show');
+  t.classList.add('show');
+  clearTimeout(t._h);t._h=setTimeout(()=>t.classList.remove('show'),9000);
+  updDiag();
+}
+/* 소리 진단 */
+function updDiag(){
+  const d=$('diag');if(!d)return;
+  if(NATIVE){
+    const i=nInfo||{};
+    const line=(ok,txt)=>`<div>${ok?'✅':'❌'} ${txt}</div>`;
+    if(!Mint){d.innerHTML=line(false,'앱 음성 기능을 불러오지 못했어요');return}
+    d.innerHTML=(i.ttsLoading||!nInfo?'<div>⏳ 휴대폰 음성 준비 중…</div>':
+      line(!!i.ttsReady,'휴대폰 음성'+(i.ttsReady?'':' — 사용할 수 없어요'))+
+      (i.ttsReady?line(!!i.thai,'태국어 음성'+(i.thai?' 있음':' 없음 — 아래 [태국어 음성 설치]를 눌러요')):'')+
+      (i.ttsReady?line(!!i.korean,'한국어 음성'+(i.korean?' 있음':' 없음')):''))+
+      line(!!i.recognizer,'음성 인식(발음 채점)'+(i.recognizer?' 있음':' 없음 — Google 앱이 필요해요'))+
+      `<div>${i.mic?'✅ 마이크 허락됨':'🎤 마이크는 처음 채점할 때 허락을 물어봐요'}</div>`+
+      `<div class="seg" style="margin-top:8px"><button id="nInst">태국어 음성 설치</button><button id="nSet">음성 설정 열기</button></div>`;
+    const a=$('nInst'),b=$('nSet');
+    if(a)a.onclick=()=>Mint.installThai().catch(()=>{});
+    if(b)b.onclick=()=>Mint.openTtsSettings().catch(()=>{});
+    return;
+  }
+  loadV();
+  const thv=voices.filter(v=>v.lang&&v.lang.toLowerCase().startsWith('th'));
+  const kov=voices.filter(v=>v.lang&&v.lang.toLowerCase().startsWith('ko'));
+  const e=engine();
+  const line=(ok,txt)=>`<div>${ok?'✅':'❌'} ${txt}</div>`;
+  d.innerHTML=
+    line(hasWeb(),'휴대폰(브라우저) 음성 기능'+(hasWeb()?'':' — 없음 (Claude 앱 안에서는 없어요)'))+
+    (hasWeb()?line(thv.length>0,'태국어 음성 '+(thv.length?thv.length+'개 ('+esc(thv[0].name)+')':'없음 — 설정에서 태국어 음성 데이터를 받아 주세요')):'')+
+    (hasWeb()?line(kov.length>0,'한국어 음성 '+(kov.length?'있음':'없음')):'')+
+    (webOK===false?line(false,'휴대폰 음성이 소리를 안 냈어요'):'')+
+    line(!!TTS,'Claude 음성 '+(TTS?'사용 가능':(ttsChecked?'— 이 화면에서는 안 돼요 (크롬 브라우저에서만 돼요)':'확인 중…')))+
+    `<div style="margin-top:6px"><b>지금 쓰는 소리:</b> ${e==='web'?'휴대폰 음성':e==='claude'?'Claude 음성':'없음 — 크롬 브라우저에서 열어 주세요'}</div>`;
+}
+function soundTest(){
+  speak([TH('สวัสดีค่ะ พี่'),KO('안녕하세요, 민트예요.')]);
+  const r=$('diagAsk');if(r)r.classList.remove('hidden');
+  setTimeout(updDiag,1500);setTimeout(updDiag,3500);
+}
+const thRate=(slow)=>Math.max(0.3,parseFloat(set.rate)*(slow?0.7:1));
+const TH=(text,slow)=>({text,lang:'th-TH',rate:thRate(slow)});
+const KO=(text)=>({text:text.replace(/[~]/g,'').replace(/[,\s]*헤헤[.!]?/g,'.').replace(/\.\.+/g,'.'),lang:'ko-KR',rate:1});
+function sayFriend(m,{thaiOnly=false,slow=false}={}){
+  if(set.auto==='off'&&!thaiOnly)return;
+  const L=[];
+  if(set.mode==='kr'&&m.kr&&!thaiOnly)L.push(KO(m.kr));
+  if(m.th)L.push(TH(m.th,slow));
+  speak(L);
+}
+
+/* ================= ui helpers ================= */
+const $=id=>document.getElementById(id);
+function el(tag,cls,html){const e=document.createElement(tag);if(cls)e.className=cls;if(html!=null)e.innerHTML=html;return e}
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function avatar(size){
+  return `<svg class="av" style="width:${size}px;height:${size}px" viewBox="0 0 40 40" aria-hidden="true">
+  <circle cx="20" cy="20" r="20" fill="#1f9e89"/>
+  <path d="M7 22 Q6 8 20 7 Q34 8 33 22 L33 15 Q30 11 20 11 Q10 11 7 15Z" fill="#3a2a22"/>
+  <circle cx="20" cy="23" r="11" fill="#f6d5b8"/>
+  <path d="M9 19 Q12 11 20 12 Q28 11 31 19 Q26 14 20 15 Q14 14 9 19Z" fill="#3a2a22"/>
+  <circle cx="16" cy="23" r="1.5" fill="#3a2a22"/><circle cx="24" cy="23" r="1.5" fill="#3a2a22"/>
+  <path d="M16.5 27.5 Q20 30.5 23.5 27.5" stroke="#c0564b" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+  <circle cx="13.5" cy="26.5" r="1.6" fill="#f2a6a0" opacity=".7"/><circle cx="26.5" cy="26.5" r="1.6" fill="#f2a6a0" opacity=".7"/>
+  <circle cx="31" cy="13" r="2.4" fill="#f4b6c2"/></svg>`;
+}
+function contour(n){return n==null?'':`<svg viewBox="0 0 34 16"><path d="${PATHS[n]}" stroke="var(${TN[n].c})" stroke-width="3" fill="none" stroke-linecap="round"/></svg>`}
+function chipHTML(x){
+  const st=x.n==null?'':` style="--c:var(${TN[x.n].c})"`;
+  return `<button class="chip"${st} data-t="${esc(x.t)}"><span class="ct th">${esc(x.t)}</span>${contour(x.n)}<span class="cr">${esc(x.r)}</span><span class="cn">${x.n==null?'&nbsp;':TN[x.n].ko}</span></button>`;
+}
+
+/* ================= home ================= */
+function renderHome(){
+  $('heroAv').innerHTML=avatar(64);
+  $('testBtn').onclick=soundTest;
+  if(NATIVE&&$('engRow'))$('engRow').classList.add('hidden');
+  updDiag();
+  const dl=$('dayList');dl.innerHTML='';
+  DAYS.forEach((d,i)=>{
+    const b=el('button','day',`<div class="num"><small>DAY</small>${i+1}</div>
+      <div><div class="ttl"><span class="th">${d.title}</span></div><div class="desc">${d.ko}</div></div>
+      <div class="done">${done[d.id]?'완료 ✓'+(done[d.id].q?'<br>'+done[d.id].q:''):''}</div>`);
+    b.onclick=()=>startDay(i);
+    dl.appendChild(b);
+  });
+  document.querySelectorAll('.seg').forEach(seg=>{
+    const key=seg.dataset.key;
+    seg.querySelectorAll('button').forEach(b=>{
+      b.classList.toggle('on',b.dataset.v===set[key]);
+      b.onclick=()=>{set[key]=b.dataset.v;save();renderHome();
+        if(key==='rate'||key==='engine')speak([TH('กา ก่า ก้า ก๊า ก๋า')]);};
+    });
+  });
+  $('legend').innerHTML=TN.map((t,i)=>`<div class="lg">${contour(i)}<div><b style="color:var(${t.c})">${t.ko}</b> <span class="th">${t.th}</span><br><small>${TDESC[i]}</small></div></div>`).join('');
+}
+function checkVoice(){
+  const n=$('voiceNote');
+  if(!('speechSynthesis' in window)){n.textContent='이 브라우저는 소리 읽기를 지원하지 않아요. 휴대폰 크롬에서 열어 주세요.';n.classList.remove('hidden');return}
+  loadV();
+  if(voices.length&&!pick('th-TH')){
+    n.innerHTML='휴대폰에 태국어 음성이 없는 것 같아요. 안드로이드 <b>설정 → 텍스트 음성 변환(TTS) → Google 음성 엔진 → 음성 데이터 설치 → 태국어</b>를 받아 주세요.';
+    n.classList.remove('hidden');
+  }else n.classList.add('hidden');
+}
+
+/* ================= dictation: 발음 듣고 채점 ================= */
+let DICT=null, micOff=false, heard='', heardPart='', micCtx=null, silenceT=null, maxT=null, dictChecked=false;
+const NOHEAR={th:'หนูไม่ได้ยินค่ะ พูดดังๆ อีกทีนะคะ',rom:'nǔu mâi dâi-yin khâ, phûut dang-dang ìik thii ná khá',ko:'잘 안 들렸어요. 크게 한 번 더요.',kr:'음… 잘 안 들렸어요. 조금 더 크게 한 번 더 말해 봐요.'};
+const REACT=[
+  {min:90,m:{th:'ชัดมากค่ะ คนไทยฟังรู้เรื่องเลย',rom:'chát mâak khâ, khon thai fang rúu-rʉ̂ang loei',ko:'아주 또렷해요! 태국 사람이 다 알아들어요.',kr:'와, 진짜 또렷해요! 태국 사람 다 알아들어요.'}},
+  {min:70,m:{th:'เกือบถูกแล้วค่ะ',rom:'kʉ̀ap thùuk lɛ́ɛo khâ',ko:'거의 맞았어요.',kr:'거의 다 됐어요! 빨간 글자만 다시 해 봐요.'}},
+  {min:0,m:{th:'ลองใหม่นะคะ ช้าๆ',rom:'lɔɔng mài ná khá, cháa-cháa',ko:'천천히 다시 해 봐요.',kr:'괜찮아요~ 먼저 내 소리 듣고, 천천히 한 번 더 해 봐요.'}}
+];
+const MICMSG={
+  not_granted:'마이크 허락이 없어서 못 들어요. 주소창 옆 자물쇠(권한)에서 마이크를 허락하면 돼요. 지금은 "채점 없이 넘어가기"로 해요.',
+  unavailable:'이 화면에서는 태국어 발음 듣기가 안 돼요. 휴대폰 크롬 브라우저에서 열어 주세요. 지금은 "따라 했어요"로 넘어가요.',
+  dismissed:'마이크 허락 창이 닫혔어요. 🎤를 다시 눌러 주세요.',
+  rate_limited:'잠깐만요~ 조금 있다가 🎤를 다시 눌러 주세요.',
+  err:'마이크가 잘 안 됐어요. 🎤를 한 번 더 눌러 주세요.'
+};
+if(NATIVE){
+  MICMSG.not_granted='마이크 허락이 없어서 못 들어요. 휴대폰 설정 → 앱 → 타이 인터네이션 → 권한 → 마이크를 허용해 주세요.';
+  MICMSG.unavailable='휴대폰 음성 인식이 태국어를 지원하지 않아요. Google 앱 → 설정 → 음성 → 언어에 태국어를 추가해 주세요.';
+}
+function setMicNote(){
+  const n=$('micNote');if(!n)return;
+  if(!dictChecked){n.textContent='🎤 마이크(발음 채점) 확인 중…';return}
+  if(DICT&&!micOff)n.innerHTML='🎤 <b>발음 채점 사용 가능</b>: 문장 카드에서 "말하고 채점"을 누르고 태국어로 말하면 민트가 듣고 점수를 줘요. 처음 한 번은 마이크 허락을 물어봐요.';
+  else if(NATIVE)n.innerHTML='🎤 이 휴대폰에서는 발음 채점을 쓸 수 없어요. 음성 인식(Google 앱)이 필요해요.';
+  else n.innerHTML='🎤 발음 채점은 휴대폰 <b>크롬 브라우저</b>에서 이 페이지를 열 때만 돼요 (Claude 앱 안에서는 안 돼요). 지금은 채점 없이 공부할 수 있어요.';
+}
+function initDict(){
+  if(NATIVE&&Mint){DICT=makeNativeDict(Mint);dictChecked=true;bindDict();setMicNote();return}
+  let p=null;
+  try{if(window.claude&&typeof claude.use==='function')p=claude.use('dictation')}catch(e){}
+  if(!p){dictChecked=true;setMicNote();return}
+  p.then(d=>{
+    DICT=d||null;dictChecked=true;
+    bindDict();
+    setMicNote();
+    if(micCtx&&micCtx.redraw)micCtx.redraw();
+  }).catch(()=>{dictChecked=true;setMicNote()});
+}
+function bindDict(){
+    if(DICT){
+      DICT.onPartial(e=>{heardPart=e.text||'';showLive();bumpSilence()});
+      DICT.onFinal(e=>{heard+=(e.text||'');heardPart='';showLive();bumpSilence()});
+      DICT.onState(e=>{
+        drawMic(e.state);
+        if(e.state==='listening'&&micCtx)micCtx.wasListening=true;
+        if(e.state==='idle'){
+          clearTimeout(silenceT);clearTimeout(maxT);
+          if(e.reason==='unavailable'||e.reason==='not_granted')micOff=true;
+          if(!micCtx)return;
+          if(e.reason==='stopped'||e.reason==='viewer_stopped'){if(micCtx.wasListening)gradeNow()}
+          else if(e.reason==='upstream_error'&&micCtx.wasListening)micMsg('err');
+          else if(e.reason==='hidden'){heard='';heardPart=''}
+          micCtx.wasListening=false;
+        }
+      });
+    }
+}
+function bumpSilence(){
+  clearTimeout(silenceT);
+  if((heard+heardPart).trim())silenceT=setTimeout(()=>{if(DICT&&DICT.active())DICT.stop().catch(()=>{})},1800);
+}
+function showLive(){
+  const lv=$('live');if(!lv)return;
+  lv.classList.remove('hidden');
+  const t=(heard+heardPart).trim();
+  lv.innerHTML=`<small>민트가 듣고 있어요… 다 말하면 잠깐 기다리거나 ■를 눌러요</small><span class="th">${t?esc(t):'…'}</span>`;
+}
+function drawMic(state){
+  const b=$('mic');if(!b)return;
+  const on=state==='starting'||state==='listening';
+  b.classList.toggle('rec',on);
+  if(state==='starting')b.innerHTML='🎤 준비 중…<small>잠깐만요</small>';
+  else if(state==='listening'){b.innerHTML='■ 다 말했어요<small>지금 말해요!</small>';showLive()}
+  else if(state==='finishing')b.innerHTML='… 듣는 중<small>잠깐만요</small>';
+  else b.innerHTML=`🎤 말하고 채점<small>${micCtx&&micCtx.graded?'한 번 더 해 보기':'민트가 들어요'}</small>`;
+}
+function micClick(){
+  if(!DICT||micOff||!micCtx)return;
+  if(DICT.active()){DICT.stop().catch(()=>{});return}
+  stopSound();
+  heard='';heardPart='';micCtx.wasListening=false;
+  DICT.start({language:'th'}).then(()=>{
+    clearTimeout(maxT);
+    maxT=setTimeout(()=>{if(DICT&&DICT.active())DICT.stop().catch(()=>{})},15000);
+  }).catch(err=>{
+    const c=(err&&err.code)||'err';
+    if(c==='not_granted'||c==='unavailable')micOff=true;
+    if(c!=='stopped')micMsg(MICMSG[c]?c:'err');
+    drawMic('idle');
+  });
+}
+function micMsg(code){
+  const m={th:'ไมค์ใช้ไม่ได้ค่ะ',rom:'mai chái mâi dâi khâ',ko:MICMSG[code],kr:MICMSG[code]};
+  const r=friendRow(m);$('log').appendChild(r);scrollEnd();
+  setMicNote();
+  if(micCtx&&micCtx.redraw)micCtx.redraw();
+}
+const norm=s=>String(s).replace(/[\s.,!?ฯ…"'()\-–—:;]/g,'');
+function lev(a,b){
+  a=[...a];b=[...b];
+  const d=Array.from({length:a.length+1},(_,i)=>[i]);
+  for(let j=1;j<=b.length;j++)d[0][j]=j;
+  for(let i=1;i<=a.length;i++)for(let j=1;j<=b.length;j++)
+    d[i][j]=Math.min(d[i-1][j]+1,d[i][j-1]+1,d[i-1][j-1]+(a[i-1]===b[j-1]?0:1));
+  return d[a.length][b.length];
+}
+function sim(a,b){const m=Math.max([...a].length,[...b].length);return m?Math.max(0,Math.round(100*(1-lev(a,b)/m))):0}
+function gradeNow(){
+  const ctx=micCtx;if(!ctx)return;
+  const raw=(heard+heardPart).trim();heard='';heardPart='';
+  const lv=$('live');if(lv)lv.classList.add('hidden');
+  const said=norm(raw);
+  if(!said){addFriend(NOHEAR);ctx.redraw();return}
+  const rows=ctx.st.rows;
+  const cands=rows.map(r=>({s:r.s,t:norm(txt(r.s))}));
+  if(rows.length>1)cands.push({s:rows.flatMap(r=>r.s),t:norm(rows.map(r=>txt(r.s)).join(''))});
+  let best=null;
+  cands.forEach(c=>{const sc=sim(said,c.t);if(!best||sc>best.sc)best={...c,sc}});
+  const marks=best.s.map(x=>said.includes(norm(x.t)));
+  const cls=best.sc>=90?'g':best.sc>=70?'m':'b';
+  const chips=best.s.map((x,k)=>chipHTML(x).replace('class="chip"',`class="chip ${marks[k]?'hit':'miss'}"`)).join('');
+  const r=el('div','row me');
+  const b=el('div','bub res',`<div class="top2"><div class="sc ${cls}">${best.sc}<small>점</small></div>
+    <div><div class="hl">민트가 들은 말</div><div class="heard th">${esc(raw)}</div></div></div>
+    <div class="chips">${chips}</div>
+    <div class="tip">초록 = 잘 들렸어요 · 빨강 = 다르게 들렸어요 (글자를 누르면 바른 소리)</div>`);
+  b.querySelectorAll('.chip').forEach(c=>c.onclick=ev=>{ev.stopPropagation();speak([TH(c.dataset.t,true)])});
+  r.appendChild(b);$('log').appendChild(r);scrollEnd();
+  L.pron.push(best.sc);
+  ctx.graded=true;
+  const m=REACT.find(x=>best.sc>=x.min).m;
+  const fr=friendRow(m);$('log').appendChild(fr);scrollEnd();
+  const S2=[];
+  if(set.auto==='on'){if(set.mode==='kr')S2.push(KO(m.kr));S2.push(TH(m.th))}
+  if(best.sc<90){const miss=best.s.filter((x,k)=>!marks[k]);(miss.length?miss:best.s).forEach(x=>S2.push(TH(x.t,true)))}
+  speak(S2);
+  ctx.redraw();
+}
+
+/* ================= lesson engine ================= */
+let L=null; // {day, i, score, total}
+function startDay(i){
+  stopMic();
+  L={day:DAYS[i],di:i,i:-1,score:0,total:0,pron:[]};
+  $('home').classList.add('hidden');$('lesson').classList.remove('hidden');
+  $('lsTitle').innerHTML=`DAY ${i+1} · <span class="th">${L.day.title}</span>`;
+  $('log').innerHTML='';
+  updModeBtn();
+  next();
+}
+function goHome(){stopMic();stopSound();
+  $('lesson').classList.add('hidden');$('home').classList.remove('hidden');renderHome();window.scrollTo(0,0)}
+$('backBtn').onclick=goHome;
+function updModeBtn(){$('modeBtn').innerHTML=set.mode==='kr'?'한+ไทย':'<span class="th">ไทย</span>만'}
+$('modeBtn').onclick=()=>{set.mode=set.mode==='kr'?'th':'kr';save();updModeBtn();
+  const last=[...$('log').querySelectorAll('.row.f')].pop();
+  if(last&&last._m)last.replaceWith(friendRow(last._m,true));
+};
+function scrollEnd(){const lg=$('log');requestAnimationFrame(()=>lg.scrollTop=lg.scrollHeight)}
+function prog(){$('progBar').style.width=Math.round(((L.i+1)/L.day.steps.length)*100)+'%'}
+
+function friendRow(m,noAnim,extra){
+  const r=el('div','row f');r._m=m;
+  r.insertAdjacentHTML('beforeend',avatar(40));
+  const b=el('div','bub');
+  if(set.mode==='kr'&&m.kr){
+    b.innerHTML=`<div class="kr">${esc(m.kr)}</div>`+(m.th?`<div class="smth"><button class="say th">${esc(m.th)}</button><div class="rom">${esc(m.rom)}</div></div>`:'');
+  }else{
+    const showKo=set.meaning==='show';
+    b.innerHTML=`<button class="say bigth th">${esc(m.th)}</button><div class="rom">${esc(m.rom)}</div>`+
+      (showKo?`<div class="ko">${esc(m.ko)}</div>`:`<button class="reveal">뜻 보기</button><div class="ko hidden">${esc(m.ko)}</div>`);
+  }
+  if(extra)b.insertAdjacentHTML('beforeend',extra);
+  b.querySelectorAll('.say').forEach(s=>s.onclick=()=>speak([TH(m.th)]));
+  const rv=b.querySelector('.reveal');if(rv)rv.onclick=()=>{rv.remove();b.querySelector('.ko').classList.remove('hidden')};
+  r.appendChild(b);
+  return r;
+}
+function addFriend(m,extra,opts){
+  const lg=$('log');
+  const r=friendRow(m,false,extra);
+  lg.appendChild(r);scrollEnd();
+  sayFriend(m,opts);
+}
+function addMe(html,thText){
+  const r=el('div','row me');
+  const b=el('div','bub',html);
+  if(thText)b.onclick=()=>speak([TH(thText)]);
+  r.appendChild(b);$('log').appendChild(r);scrollEnd();
+}
+function bar(html,cls){const b=$('bar');b.innerHTML=html;return b}
+
+function replayRow(){ // mini row: again / slowly for last friend line
+  return `<div class="mini"><button id="again"><span class="th">อีกที</span> · 한 번 더</button><button id="slow"><span class="th">ช้าๆ</span> · 더 천천히</button></div>`;
+}
+function wireReplay(m){
+  const a=$('again'),s=$('slow');
+  if(a)a.onclick=()=>speak([TH(m.th)]);
+  if(s)s.onclick=()=>speak([TH(m.th,true)]);
+}
+
+function stopMic(){micCtx=null;try{if(DICT&&DICT.active())DICT.stop().catch(()=>{})}catch(e){}}
+function next(){
+  stopMic();
+  L.i++;prog();
+  const st=L.day.steps[L.i];
+  if(!st){return finish()}
+  if(st.k==='say')return doSay(st);
+  if(st.k==='teach')return doTeach(st);
+  if(st.k==='quiz')return doQuiz(st);
+}
+
+function nextBar(m){
+  bar(`${m&&m.th?replayRow():''}<div class="grid one"><button class="btn pri" id="nx"><span class="th">ต่อไป</span> · 다음 ▶</button></div>`);
+  if(m&&m.th)wireReplay(m);
+  $('nx').onclick=next;
+}
+
+function doSay(st){
+  addFriend(st);
+  if(st.replies){
+    bar(replayRow()+'<div class="grid one">'+st.replies.map((r,j)=>
+      `<button class="btn reply" data-j="${j}"><span class="th">${esc(r.th)}</span><small>${esc(r.rom)} · ${esc(r.ko)}</small></button>`).join('')+'</div>');
+    wireReplay(st);
+    $('bar').querySelectorAll('.reply').forEach(b=>b.onclick=()=>{
+      const r=st.replies[+b.dataset.j];
+      addMe(`<div class="th" style="font-size:22px">${esc(r.th)}</div><div class="rom" style="font-size:15px;color:#7a5a2a">${esc(r.rom)}</div>`,r.th);
+      if(r.resp){addFriend(r.resp);nextBar(r.resp)}
+      else{speak([TH(r.th)]);nextBar(null)}
+    });
+  }else nextBar(st);
+}
+
+function doTeach(st){
+  const lg=$('log');
+  const card=el('div','teach'+(st.who==='me'?' me':''));
+  card.innerHTML=`<div class="who">${st.who==='me'?'피가 말할 문장 · <span class="th">พี่พูดแบบนี้</span>':'민트가 알려 주는 말 · <span class="th">ฟังนะคะ</span>'}</div>`+
+    st.rows.map((r,j)=>`<div class="trow"><div class="chips">${r.s.map(chipHTML).join('')}</div>
+      <div class="tmeta"><div class="m">${set.meaning==='show'?esc(r.ko):`<button class="reveal" style="border:1px solid var(--line);background:#fbf8f4;border-radius:10px;padding:4px 10px;font-size:15px">뜻 보기</button><span class="hidden">${esc(r.ko)}</span>`}</div>
+      <button class="pl" data-j="${j}">▶ 듣기</button></div></div>`).join('');
+  card.querySelectorAll('.chip').forEach(c=>c.onclick=()=>speak([TH(c.dataset.t,true)]));
+  card.querySelectorAll('.pl').forEach(p=>p.onclick=()=>speak([TH(txt(st.rows[+p.dataset.j].s))]));
+  card.querySelectorAll('.reveal').forEach(rv=>rv.onclick=()=>{rv.nextElementSibling.classList.remove('hidden');rv.remove()});
+  lg.appendChild(card);scrollEnd();
+
+  const playAll=()=>speak(st.chant?st.rows[0].s.map(x=>TH(x.t)):st.rows.map(r=>TH(txt(r.s))));
+  const playSyl=()=>{const L2=[];st.rows.forEach(r=>r.s.forEach(x=>L2.push(TH(x.t,true))));speak(L2)};
+  if(set.auto==='on')playAll();
+
+  const ctx={st,graded:false,wasListening:false};
+  micCtx=ctx;
+  const hard=()=>{
+    addMe(`어려워요… <span class="th">ยากจังครับ</span>`);
+    const r=friendRow(HARD);$('log').appendChild(r);scrollEnd();
+    const L2=[];
+    if(set.auto==='on'&&set.mode==='kr')L2.push(KO(HARD.kr));
+    st.rows.forEach(rw=>rw.s.forEach(x=>L2.push(TH(x.t,true))));
+    speak(L2);
+  };
+  const okNoMic=()=>{
+    const said=st.who==='me'?st.rows.map(r=>txt(r.s)).join(' / '):st.rows.map(r=>txt(r.s)).join(' · ');
+    addMe(`<div class="th" style="font-size:20px">${esc(said)}</div><div style="font-size:14px;color:#7a5a2a">(따라 말했어요)</div>`);
+    const p=PRAISE_REPEAT[Math.floor(Math.random()*PRAISE_REPEAT.length)];
+    addFriend(p);
+    micCtx=null;
+    nextBar(null);
+  };
+  ctx.redraw=()=>{
+    if(micCtx!==ctx)return;
+    const mic=DICT&&!micOff;
+    bar(`<div class="grid">
+      <button class="btn" id="pa">▶ 전체 듣기<small>보통 속도로</small></button>
+      <button class="btn" id="ps">🐢 한 글자씩<small>더 천천히</small></button>
+      ${mic?`<button class="btn mic" id="mic"></button>`
+           :`<button class="btn" id="hd">어려워요<small><span class="th">ยากจัง</span></small></button>`}
+      ${mic?(ctx.graded?`<button class="btn pri" id="nx2"><span class="th">ต่อไป</span> · 다음 ▶<small>다음으로</small></button>`
+                       :`<button class="btn" id="ok">채점 없이 넘어가기<small>따라 했어요</small></button>`)
+           :`<button class="btn pri" id="ok">따라 했어요 ✓<small><span class="th">พูดตามแล้ว</span></small></button>`}
+      </div><div class="live hidden" id="live"></div>`);
+    $('pa').onclick=playAll;$('ps').onclick=playSyl;
+    if($('hd'))$('hd').onclick=hard;
+    if($('ok'))$('ok').onclick=okNoMic;
+    if($('nx2'))$('nx2').onclick=next;
+    if($('mic')){$('mic').onclick=micClick;drawMic(DICT.active()?'listening':'idle')}
+  };
+  ctx.redraw();
+}
+
+function doQuiz(st){
+  const isTone=st.type==='tone';
+  const q=isTone?TONE_Q:MEAN_Q;
+  const word=txt(st.word);
+  addFriend(q,null,{});
+  const lg=$('log');
+  const card=el('div','listen');
+  card.innerHTML=`<div class="q th">?</div><button class="big">🔊 다시 듣기 · <span class="th">ฟังอีกที</span></button>`;
+  const qMark=card.querySelector('.q');
+  card.querySelector('.big').onclick=()=>speak([TH(word)]);
+  lg.appendChild(card);scrollEnd();
+  // speak question then the word
+  const LQ=[];
+  if(set.auto==='on'){if(set.mode==='kr')LQ.push(KO(q.kr));else LQ.push(TH(q.th));}
+  LQ.push(TH(word));LQ.push(TH(word,true));
+  speak(LQ);
+
+  const opts=isTone?TN.map((t,i)=>({h:`<span style="color:var(${t.c});font-weight:700">${t.ko}</span> <span class="th">${t.th}</span>`,i}))
+                   :st.options.map((o,i)=>({h:esc(o),i}));
+  bar(`<div class="grid ${isTone?'':(opts.length===3?'one':'')}">${opts.map(o=>`<button class="btn opt" data-i="${o.i}">${o.h}</button>`).join('')}
+     ${isTone?'<button class="btn" id="qa">🔊 다시</button>':''}</div>`);
+  if($('qa'))$('qa').onclick=()=>speak([TH(word)]);
+  L.total++;
+  let tries=0;
+  $('bar').querySelectorAll('.opt').forEach(b=>b.onclick=()=>{
+    const pickI=+b.dataset.i;tries++;
+    if(pickI===st.ans){
+      b.classList.add('ok');
+      if(tries===1)L.score++;
+      qMark.outerHTML=`<div class="chips" style="justify-content:center">${st.word.map(chipHTML).join('')}</div>`;
+      card.querySelectorAll('.chip').forEach(c=>c.onclick=()=>speak([TH(c.dataset.t,true)]));
+      const p=PRAISE_QUIZ[Math.floor(Math.random()*PRAISE_QUIZ.length)];
+      const ansTxt=isTone?`${word} = ${TN[st.ans].ko} (${TN[st.ans].th})${st.mean?' · 뜻: '+st.mean:''}`:`${word} = ${st.options[st.ans]}`;
+      addFriend(p,`<div class="ans th">${esc(ansTxt)}</div>`);
+      nextBar(null);
+    }else{
+      b.classList.add('bad');b.disabled=true;
+      addFriend(WRONG,null,{});
+      speak([...(set.auto==='on'&&set.mode==='kr'?[KO(WRONG.kr)]:set.auto==='on'?[TH(WRONG.th)]:[]),TH(word,true)]);
+    }
+  });
+}
+
+function finish(){
+  const d=L.day;
+  const pavg=L.pron.length?Math.round(L.pron.reduce((a,b)=>a+b,0)/L.pron.length):null;
+  const qtxt=(L.total?`퀴즈 ${L.score}/${L.total}`:'')+(pavg!=null?` · 발음 ${pavg}점`:'');
+  done[d.id]={q:qtxt,at:Date.now()};save();
+  const box=el('div','end',`${avatar(64)}<h3>DAY ${L.di+1} 끝! <span class="th">เก่งมาก</span></h3>
+    <div>${L.total?'한 번에 맞힌 퀴즈: <b>'+L.score+' / '+L.total+'</b>':''}</div>
+    ${pavg!=null?`<div>발음 평균 점수: <b>${pavg}점</b> (${L.pron.length}번 채점)</div>`:''}
+    <div style="color:var(--sub);font-size:15px;margin-top:6px">내일 또 하면 더 잘 들려요.</div>`);
+  $('log').appendChild(box);scrollEnd();
+  const hasNext=L.di+1<DAYS.length;
+  bar(`<div class="grid ${hasNext?'three':''}">
+    <button class="btn" id="again2">다시 하기</button>
+    <button class="btn" id="home2">처음 화면</button>
+    ${hasNext?`<button class="btn pri" id="nextDay">DAY ${L.di+2} ▶</button>`:''}</div>`);
+  $('again2').onclick=()=>startDay(L.di);
+  $('home2').onclick=goHome;
+  if(hasNext)$('nextDay').onclick=()=>startDay(L.di+1);
+}
+
+renderHome();
+if(!NATIVE)setTimeout(checkVoice,1200);
+setTimeout(updDiag,1500);
+initDict();
+(function initTTS(){
+  if(NATIVE){ttsChecked=true;return}
+  let p=null;
+  try{if(window.claude&&typeof claude.use==='function')p=claude.use('tts')}catch(e){}
+  if(!p){ttsChecked=true;updDiag();return}
+  p.then(t=>{TTS=t||null;ttsChecked=true;updDiag()}).catch(()=>{ttsChecked=true;updDiag()});
+})();
+</script>
+</body>
+</html>

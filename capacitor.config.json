@@ -1,0 +1,6 @@
+{
+  "appId": "com.kiyeon.thaiintonation",
+  "appName": "타이 인터네이션",
+  "webDir": "www",
+  "android": { "allowMixedContent": false }
+}

@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">타이 인터네이션</string>
+    <string name="title_activity_main">타이 인터네이션</string>
+    <string name="package_name">com.kiyeon.thaiintonation</string>
+    <string name="custom_url_scheme">com.kiyeon.thaiintonation</string>
+</resources>
