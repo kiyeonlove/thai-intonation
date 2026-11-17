@@ -268,6 +268,7 @@ const WRONG={th:'ไม่เป็นไรค่ะ ฟังอีกที�
 const HARD={th:'ไม่เป็นไรค่ะ ฟังช้าๆ ทีละพยางค์นะคะ',rom:'mâi-pen-rai khâ, fang cháa-cháa thii-lá pha-yaang ná khá',ko:'괜찮아요, 한 글자씩 천천히 들어 봐요.',kr:'괜찮아요~ 어려운 거 맞아요. 한 글자씩 천천히 다시 해요.'};
 
 const TONE_Q={th:'เสียงอะไรคะ',rom:'sǐang à-rai khá',ko:'무슨 성조예요?',kr:'잘 들어요… 이거 몇 성이에요?'};
+const PICK_Q={th:'อันนี้คืออะไรคะ',rom:'an níi khʉʉ à-rai khá',ko:'이건 뭐예요?',kr:'이거 뭔지 맞혀 봐요!'};
 const MEAN_Q={th:'คำนี้แปลว่าอะไรคะ',rom:'kham níi plɛɛ wâa à-rai khá',ko:'이 말은 무슨 뜻이에요?',kr:'잘 들어요… 이거 무슨 뜻이에요?'};
 
 const DAYS=[
@@ -358,9 +359,128 @@ const DAYS=[
     {k:'quiz',type:'mean',word:S('เสียง|sǐang|4 ต้อง|tɔ̂ng|2 ขึ้น|khʉ̂n|2'),options:['소리가 올라가야 해요','소리가 내려가야 해요'],ans:0},
 
     {k:'say',th:'สุดท้าย ประโยคยากค่ะ',rom:'sùt-tháai, prà-yòok yâak khâ',ko:'마지막은 어려운 문장이에요.',kr:'마지막! 어려운 문장. 태국 사람들이 외국 사람한테 장난으로 시켜 봐요, 헤헤.'},
-    {k:'teach',who:'friend',rows:[{s:S('ไม้|máai|3 ใหม่|mài|1 ไม่|mâi|2 ไหม้|mâi|2 ไหม|mǎi|4'),ko:'새 나무는 안 타요? (나무·새·안·타다·질문)'}]},
+    {k:'teach',who:'friend',rows:[{s:S('ไม้|mái|3 ใหม่|mài|1 ไม่|mâi|2 ไหม้|mâi|2 ไหม|mǎi|4'),ko:'새 나무는 안 타요? (나무·새·안·타다·질문)'}]},
     {k:'say',th:'เก่งมากค่ะพี่ เดือนกุมภาพันธ์ เจอกันที่เมืองไทยนะคะ',rom:'kèng mâak khâ phîi, dʉan kum-phaa-phan jəə kan thîi mʉang thai ná khá',ko:'정말 잘했어요! 2월에 태국에서 만나요.',kr:'피 진짜 잘했어요! 2월에 태국 오면 나랑 태국말로 이야기해요~',
       replies:[{th:'ขอบคุณครับ เจอกันครับ',rom:'khɔ̀ɔp-khun khráp, jəə kan khráp',ko:'고마워요, 만나요'}]}
+  ]
+},
+{
+  id:'d3', title:'รูปวรรณยุกต์ 4 ตัว', ko:'성조 부호 4개 이름 · 부호 보고 성조 읽기',
+  steps:[
+    {k:'say',th:'สวัสดีค่ะพี่ วันนี้เรียนรูปวรรณยุกต์นะคะ',rom:'sà-wàt-dii khâ phîi, wan-níi rian rûup wan-ná-yúk ná khá',ko:'안녕하세요! 오늘은 성조 부호를 배워요.',kr:'피~ 오늘은 성조 \'부호\'를 배워요! 글자 위에 붙는 작은 표시요.',
+      replies:[{th:'ครับ พร้อมแล้วครับ',rom:'khráp, phrɔ́ɔm lɛ́ɛo khráp',ko:'네, 준비됐어요'}]},
+    {k:'teach',who:'friend',rows:[{s:S('รูป|rûup|2 วรรณยุกต์|wan-ná-yúk|-'),ko:'성조 부호 (รูป = 모양)'}]},
+    {k:'say',th:'รูปวรรณยุกต์มีสี่ตัวค่ะ',rom:'rûup wan-ná-yúk mii sìi tua khâ',ko:'성조 부호는 네 개예요.',kr:'부호는 딱 네 개! 이름이 다 \'마이\'로 시작해요.'},
+    {k:'teach',who:'friend',rows:[
+      {s:S('ไม้|mái|3 เอก|èek|1'),ko:'◌่  마이 엑 — 작은 세로줄 하나'},
+      {s:S('ไม้|mái|3 โท|thoo|0'),ko:'◌้  마이 토 — 작은 숫자 2 모양'},
+      {s:S('ไม้|mái|3 ตรี|trii|0'),ko:'◌๊  마이 뜨리 — 작은 숫자 7 모양'},
+      {s:S('ไม้|mái|3 จัต|jàt|1 วา|(ta)-waa|0'),ko:'◌๋  마이 짯따와 — 작은 + 모양'}]},
+    {k:'say',th:'กับอักษรกลาง ชื่อไม้กับชื่อเสียงเหมือนกันค่ะ',rom:'kàp àk-sǒn klaang, chʉ̂ʉ mái kàp chʉ̂ʉ sǐang mʉ̌an kan khâ',ko:'중자음에서는 부호 이름과 성조 이름이 같아요.',kr:'비밀 하나! ก 같은 중자음에 붙으면 부호 이름 그대로 성조가 돼요. 마이 엑이면 씨앙 엑!'},
+    {k:'teach',who:'friend',rows:[
+      {s:S('ก่า|kàa|1'),ko:'ก + ไม้เอก → เสียงเอก (1성)'},
+      {s:S('ก้า|kâa|2'),ko:'ก + ไม้โท → เสียงโท (2성)'},
+      {s:S('ก๊า|káa|3'),ko:'ก + ไม้ตรี → เสียงตรี (3성)'},
+      {s:S('ก๋า|kǎa|4'),ko:'ก + ไม้จัตวา → เสียงจัตวา (4성)'}]},
+    {k:'say',th:'อักษรกลางมีเก้าตัว คนไทยท่องแบบนี้ค่ะ',rom:'àk-sǒn klaang mii kâo tua, khon thai thɔ̂ng bɛ̀ɛp níi khâ',ko:'중자음은 9개예요. 태국 사람은 이렇게 외워요.',kr:'중자음은 9개. 태국 애들은 이 문장으로 외워요. 뜻이 좀 무서워요, 헤헤.'},
+    {k:'teach',who:'friend',rows:[{s:S('ไก่|kài|1 จิก|jìk|1 เด็ก|dèk|1 ตาย|taai|0 บน|bon|0 ปาก|pàak|1 โอ่ง|òong|1'),ko:'닭이 항아리 위에서 아이를 쪼아 죽였다 — 중자음 ก จ ด ต บ ป อ (+ ฎ ฏ)'}]},
+    {k:'say',th:'ทีนี้ คำจริงนะคะ ดูไม้ แล้วอ่านเสียง',rom:'thii-níi kham jing ná khá, duu mái lɛ́ɛo àan sǐang',ko:'이제 진짜 단어예요. 부호 보고 성조를 읽어요.',kr:'이제 진짜 단어! 부호를 보고 성조를 읽어 봐요.'},
+    {k:'teach',who:'friend',rows:[
+      {s:S('ไก่|kài|1'),ko:'닭 (ไม้เอก)'},
+      {s:S('ป่า|pàa|1'),ko:'숲 (ไม้เอก)'},
+      {s:S('บ้าน|bâan|2'),ko:'집 (ไม้โท)'},
+      {s:S('ต้ม|tôm|2'),ko:'끓이다 — ต้มยำ의 ต้ม (ไม้โท)'}]},
+    {k:'teach',who:'friend',rows:[
+      {s:S('โต๊ะ|tó|3'),ko:'탁자 (ไม้ตรี)'},
+      {s:S('ตั๋ว|tǔa|4'),ko:'표, 티켓 (ไม้จัตวา)'},
+      {s:S('เดี๋ยว|dǐao|4'),ko:'잠깐 (ไม้จัตวา)'},
+      {s:S('ก๊วย|kúai|3 เตี๋ยว|tǐao|4'),ko:'쌀국수 — ไม้ตรี + ไม้จัตวา 둘 다!'}]},
+    {k:'say',th:'ทายไม้กันนะคะ',rom:'thaai mái kan ná khá',ko:'부호 이름 맞히기 해요.',kr:'퀴즈! 부호 보고 이름 맞혀요.'},
+    {k:'quiz',type:'pick',show:'◌้',options:['ไม้เอก','ไม้โท','ไม้ตรี','ไม้จัตวา'],ans:1},
+    {k:'quiz',type:'pick',show:'◌๋',options:['ไม้เอก','ไม้โท','ไม้ตรี','ไม้จัตวา'],ans:3},
+    {k:'quiz',type:'pick',show:'◌๊',options:['ไม้เอก','ไม้โท','ไม้ตรี','ไม้จัตวา'],ans:2},
+    {k:'quiz',type:'pick',show:'◌่',options:['ไม้เอก','ไม้โท','ไม้ตรี','ไม้จัตวา'],ans:0},
+    {k:'say',th:'ทีนี้ฟังแล้วทายเสียงค่ะ',rom:'thii-níi fang lɛ́ɛo thaai sǐang khâ',ko:'이제 듣고 성조를 맞혀요.',kr:'이번엔 듣고 몇 성인지 맞혀요!'},
+    {k:'quiz',type:'tone',word:S('ตั๋ว|tǔa|4'),ans:4,mean:'표'},
+    {k:'quiz',type:'tone',word:S('บ้าน|bâan|2'),ans:2,mean:'집'},
+    {k:'quiz',type:'tone',word:S('โต๊ะ|tó|3'),ans:3,mean:'탁자'},
+    {k:'quiz',type:'tone',word:S('ไก่|kài|1'),ans:1,mean:'닭'},
+    {k:'say',th:'ถ้าเห็นไม้ที่ไม่รู้จัก ถามแบบนี้นะคะ',rom:'thâa hěn mái thîi mâi rúu-jàk, thǎam bɛ̀ɛp níi ná khá',ko:'모르는 부호를 보면 이렇게 물어봐요.',kr:'모르는 부호가 보이면 나한테 이렇게 물어봐요.'},
+    {k:'teach',who:'me',rows:[{s:S('อัน|an|0 นี้|níi|3 ไม้|mái|3 อะ|à|1 ไร|rai|0 ครับ|khráp|3'),ko:'이건 무슨 부호예요?'}]},
+    {k:'teach',who:'me',rows:[{s:S('คำ|kham|0 นี้|níi|3 อ่าน|àan|1 ว่า|wâa|2 ยัง|yang|0 ไง|ngai|0 ครับ|khráp|3'),ko:'이 단어는 어떻게 읽어요?'}]},
+    {k:'say',th:'วันนี้เก่งมากค่ะ พรุ่งนี้ฝึกหูกันนะคะ',rom:'wan-níi kèng mâak khâ, phrûng-níi fʉ̀k hǔu kan ná khá',ko:'오늘 정말 잘했어요. 내일은 귀 훈련해요.',kr:'오늘 진짜 잘했어요! 내일은 귀 훈련, 듣기 많이 해요~',
+      replies:[{th:'ขอบคุณครับ',rom:'khɔ̀ɔp-khun khráp',ko:'고마워요'}]}
+  ]
+},
+{
+  id:'d4', title:'ฝึกหู', ko:'귀 훈련 · 듣고 성조 맞히기 집중',
+  steps:[
+    {k:'say',th:'วันนี้ฝึกหูกันนะคะ',rom:'wan-níi fʉ̀k hǔu kan ná khá',ko:'오늘은 귀 훈련해요.',kr:'오늘은 귀 훈련! 듣고 맞히기 많이 해요. 틀려도 괜찮아요~',
+      replies:[{th:'ครับ ลุยเลยครับ',rom:'khráp, lui loei khráp',ko:'네, 해 봐요!'}]},
+    {k:'say',th:'เคล็ดลับค่ะ ฟังตอนท้ายของคำนะคะ',rom:'khlét-láp khâ, fang tɔɔn tháai khɔ̌ɔng kham ná khá',ko:'비법: 단어 끝부분을 잘 들어요.',kr:'비법 하나! 단어 끝을 잘 들어요. 끝이 올라가면 4성, 뚝 떨어지면 2성, 쭉 낮으면 1성이에요.'},
+    {k:'teach',who:'friend',rows:[
+      {s:S('ปา|paa|0'),ko:'던지다 (평성)'},
+      {s:S('ป่า|pàa|1'),ko:'숲 (1성)'},
+      {s:S('ป้า|pâa|2'),ko:'이모, 아주머니 (2성)'},
+      {s:S('ป๊า|páa|3'),ko:'아빠 — 중국계 집에서 쓰는 말 (3성)'},
+      {s:S('ป๋า|pǎa|4'),ko:'아빠, 형님 — 편한 말 (4성)'}]},
+    {k:'quiz',type:'tone',word:S('ป้า|pâa|2'),ans:2,mean:'이모, 아주머니'},
+    {k:'quiz',type:'tone',word:S('ป่า|pàa|1'),ans:1,mean:'숲'},
+    {k:'quiz',type:'tone',word:S('ป๋า|pǎa|4'),ans:4,mean:'아빠(편한 말)'},
+    {k:'quiz',type:'tone',word:S('ปา|paa|0'),ans:0,mean:'던지다'},
+    {k:'quiz',type:'tone',word:S('ป๊า|páa|3'),ans:3,mean:'아빠(중국계 말)'},
+    {k:'say',th:'อีกชุดหนึ่งค่ะ คำว่า ไม้',rom:'ìik chút nʉ̀ng khâ, kham wâa mái',ko:'한 세트 더요. \'마이\' 세트예요.',kr:'다음은 유명한 \'마이\' 세트! 2편 마지막에 배운 문장 기억나요?'},
+    {k:'teach',who:'friend',rows:[
+      {s:S('ไหม|mǎi|4'),ko:'~해요? (질문) / 비단'},
+      {s:S('ใหม่|mài|1'),ko:'새로운'},
+      {s:S('ไม่|mâi|2'),ko:'아니다, 안'},
+      {s:S('ไม้|mái|3'),ko:'나무'}]},
+    {k:'quiz',type:'mean',word:S('ใหม่|mài|1'),options:['질문','새로운','아니다','나무'],ans:1},
+    {k:'quiz',type:'mean',word:S('ไม้|mái|3'),options:['질문','새로운','아니다','나무'],ans:3},
+    {k:'quiz',type:'mean',word:S('ไม่|mâi|2'),options:['질문','새로운','아니다','나무'],ans:2},
+    {k:'say',th:'ทีนี้ คำสองพยางค์ค่ะ',rom:'thii-níi kham sɔ̌ɔng pha-yaang khâ',ko:'이제 두 음절 단어예요.',kr:'이제 두 음절 단어! 성조 두 개를 잘 들어요. 매일 쓰는 말이에요.'},
+    {k:'teach',who:'friend',rows:[
+      {s:S('ขอบ|khɔ̀ɔp|1 คุณ|khun|0'),ko:'고마워요 (1성 + 평성)'},
+      {s:S('เท่า|thâo|2 ไร|rai|0'),ko:'얼마예요? (2성 + 평성)'},
+      {s:S('อร่อย|à-rɔ̀i|1'),ko:'맛있어요 (1성 + 1성)'},
+      {s:S('ไม่|mâi|2 เป็น|pen|0 ไร|rai|0'),ko:'괜찮아요 (2성 + 평성 + 평성)'}]},
+    {k:'quiz',type:'mean',word:S('เท่า|thâo|2 ไร|rai|0'),options:['괜찮아요','얼마예요?','고마워요'],ans:1},
+    {k:'say',th:'สุดท้าย ฟังแล้วเลือกให้ถูกนะคะ',rom:'sùt-tháai, fang lɛ́ɛo lʉ̂ak hâi thùuk ná khá',ko:'마지막, 듣고 맞는 걸 골라요.',kr:'마지막 도전! 비슷한 말 중에서 맞는 걸 골라요.'},
+    {k:'quiz',type:'mean',word:S('ข้าว|khâao|2'),options:['ขาว 흰색','ข่าว 뉴스','ข้าว 밥, 쌀'],ans:2},
+    {k:'quiz',type:'mean',word:S('ใกล้|klâi|2'),options:['ใกล้ 가깝다','ไกล 멀다'],ans:0},
+    {k:'quiz',type:'mean',word:S('เสือ|sʉ̌a|4'),options:['เสือ 호랑이','เสื้อ 옷'],ans:0},
+    {k:'say',th:'หูดีมากเลยค่ะพี่ พรุ่งนี้สอบนะคะ',rom:'hǔu dii mâak loei khâ phîi, phrûng-níi sɔ̀ɔp ná khá',ko:'귀가 정말 좋네요! 내일은 시험이에요.',kr:'피 귀 진짜 좋아졌어요! 내일은 1~4편 총복습 시험이에요. 떨지 마요, 헤헤.',
+      replies:[{th:'ขอบคุณครับ พรุ่งนี้เจอกันครับ',rom:'khɔ̀ɔp-khun khráp, phrûng-níi jəə kan khráp',ko:'고마워요, 내일 만나요'}]}
+  ]
+},
+{
+  id:'d5', title:'สอบขั้นที่ 1', ko:'1단계 복습 시험 · 1~4편 총정리',
+  steps:[
+    {k:'say',th:'วันนี้สอบค่ะ แต่ไม่ต้องกลัวนะคะ',rom:'wan-níi sɔ̀ɔp khâ, tɛ̀ɛ mâi tɔ̂ng klua ná khá',ko:'오늘은 시험이에요. 하지만 겁먹지 마요.',kr:'오늘은 1단계 시험! 무서워하지 마요~ 다 배운 거예요.',
+      replies:[{th:'ครับ พร้อมแล้วครับ',rom:'khráp, phrɔ́ɔm lɛ́ɛo khráp',ko:'네, 준비됐어요'}]},
+    {k:'say',th:'อุ่นเครื่องก่อนค่ะ',rom:'ùn-khrʉ̂ang kɔ̀ɔn khâ',ko:'먼저 준비운동해요.',kr:'먼저 준비운동! 같이 \'까 까 까 까 까\'.'},
+    {k:'teach',who:'friend',chant:true,rows:[{s:S('กา|kaa|0 ก่า|kàa|1 ก้า|kâa|2 ก๊า|káa|3 ก๋า|kǎa|4'),ko:'평성 · 1성 · 2성 · 3성 · 4성'}]},
+    {k:'say',th:'ข้อหนึ่ง ชื่อเสียงค่ะ',rom:'khɔ̂ɔ nʉ̀ng, chʉ̂ʉ sǐang khâ',ko:'1번, 성조 이름이에요.',kr:'1번 문제! 태국 성조 이름, 한국말로 몇 성이에요?'},
+    {k:'quiz',type:'pick',show:'เสียงโท',options:['평성','1성','2성','3성','4성'],ans:2,q:{th:'เสียงนี้คือเสียงอะไรคะ',rom:'sǐang níi khʉʉ sǐang à-rai khá',ko:'이 성조는 몇 성이에요?',kr:'이 성조 이름, 몇 성이에요?'}},
+    {k:'quiz',type:'pick',show:'เสียงจัตวา',options:['평성','1성','2성','3성','4성'],ans:4,q:{th:'เสียงนี้คือเสียงอะไรคะ',rom:'sǐang níi khʉʉ sǐang à-rai khá',ko:'이 성조는 몇 성이에요?',kr:'이건요? 몇 성이에요?'}},
+    {k:'quiz',type:'pick',show:'เสียงสามัญ',options:['평성','1성','2성','3성','4성'],ans:0,q:{th:'เสียงนี้คือเสียงอะไรคะ',rom:'sǐang níi khʉʉ sǐang à-rai khá',ko:'이 성조는 몇 성이에요?',kr:'이것도요!'}},
+    {k:'quiz',type:'pick',show:'◌่',options:['ไม้เอก','ไม้โท','ไม้ตรี','ไม้จัตวา'],ans:0,q:{th:'อันนี้ไม้อะไรคะ',rom:'an níi mái à-rai khá',ko:'이건 무슨 부호예요?',kr:'부호 이름은요?'}},
+    {k:'say',th:'ข้อสอง ฟังแล้วทายเสียงค่ะ',rom:'khɔ̂ɔ sɔ̌ɔng, fang lɛ́ɛo thaai sǐang khâ',ko:'2번, 듣고 성조를 맞혀요.',kr:'2번 문제! 듣고 몇 성인지 맞혀요.'},
+    {k:'quiz',type:'tone',word:S('ข้าว|khâao|2'),ans:2,mean:'밥, 쌀'},
+    {k:'quiz',type:'tone',word:S('บ่าย|bàai|1'),ans:1,mean:'오후'},
+    {k:'quiz',type:'tone',word:S('ขา|khǎa|4'),ans:4,mean:'다리'},
+    {k:'quiz',type:'tone',word:S('มา|maa|0'),ans:0,mean:'오다'},
+    {k:'quiz',type:'tone',word:S('ม้า|máa|3'),ans:3,mean:'말(동물)'},
+    {k:'say',th:'ข้อสาม ฟังแล้วเลือกความหมายค่ะ',rom:'khɔ̂ɔ sǎam, fang lɛ́ɛo lʉ̂ak khwaam-mǎai khâ',ko:'3번, 듣고 뜻을 골라요.',kr:'3번 문제! 듣고 뜻을 골라요.'},
+    {k:'quiz',type:'mean',word:S('หมา|mǎa|4'),options:['오다','개','말(동물)'],ans:1},
+    {k:'quiz',type:'mean',word:S('ไกล|klai|0'),options:['가깝다','멀다'],ans:1},
+    {k:'quiz',type:'mean',word:S('ไม่|mâi|2'),options:['새로운','아니다','나무'],ans:1},
+    {k:'quiz',type:'mean',word:S('ตั๋ว|tǔa|4'),options:['탁자','표, 티켓','집'],ans:1},
+    {k:'say',th:'ข้อสุดท้าย พูดให้หนูฟังนะคะ',rom:'khɔ̂ɔ sùt-tháai, phûut hâi nǔu fang ná khá',ko:'마지막 문제, 저한테 말해 주세요.',kr:'마지막은 말하기 시험! 🎤로 말해 봐요.'},
+    {k:'teach',who:'me',rows:[{s:S('ไม้|mái|3 ใหม่|mài|1 ไม่|mâi|2 ไหม้|mâi|2 ไหม|mǎi|4'),ko:'새 나무는 안 타요?'}]},
+    {k:'teach',who:'me',rows:[{s:S('ขอบ|khɔ̀ɔp|1 คุณ|khun|0 ที่|thîi|2 สอน|sɔ̌ɔn|4 ครับ|khráp|3'),ko:'가르쳐 줘서 고마워요'}]},
+    {k:'say',th:'ผ่านแล้วค่ะ จบขั้นที่หนึ่งแล้ว',rom:'phàan lɛ́ɛo khâ, jòp khân thîi nʉ̀ng lɛ́ɛo',ko:'합격이에요! 1단계가 끝났어요.',kr:'합격! 축하해요, 피~ 1단계 끝! 다음부터는 성조 규칙이에요. 이걸 알면 처음 보는 단어도 성조를 읽을 수 있어요.',
+      replies:[{th:'เย้ ขอบคุณครับ มิ้นท์',rom:'yée, khɔ̀ɔp-khun khráp mín',ko:'야호, 고마워요 민트'}]}
   ]
 }
 ];
@@ -907,25 +1027,28 @@ function doTeach(st){
 }
 
 function doQuiz(st){
+  // type: 'tone'(듣고 성조) | 'mean'(듣고 뜻) | 'pick'(보고 고르기: st.show 글자를 보여 줌)
   const isTone=st.type==='tone';
-  const q=isTone?TONE_Q:MEAN_Q;
-  const word=txt(st.word);
-  addFriend(q,null,{});
+  const q=st.q||(isTone?TONE_Q:st.type==='pick'?PICK_Q:MEAN_Q);
+  const hasWord=!!(st.word&&st.word.length);
+  const word=hasWord?txt(st.word):'';
+  addFriend(q,null,{thaiOnly:false});
   const lg=$('log');
   const card=el('div','listen');
-  card.innerHTML=`<div class="q th">?</div><button class="big">🔊 다시 듣기 · <span class="th">ฟังอีกที</span></button>`;
+  const shown=st.show?`<div class="q th" style="color:var(--ink);font-size:${st.show.length>3?34:56}px">${esc(st.show)}</div>`:`<div class="q th">?</div>`;
+  card.innerHTML=shown+(hasWord?`<button class="big">🔊 다시 듣기 · <span class="th">ฟังอีกที</span></button>`:'');
   const qMark=card.querySelector('.q');
-  card.querySelector('.big').onclick=()=>speak([TH(word)]);
+  if(hasWord)card.querySelector('.big').onclick=()=>speak([TH(word)]);
   lg.appendChild(card);scrollEnd();
-  // speak question then the word
   const LQ=[];
   if(set.auto==='on'){if(set.mode==='kr')LQ.push(KO(q.kr));else LQ.push(TH(q.th));}
-  LQ.push(TH(word));LQ.push(TH(word,true));
+  if(hasWord&&!st.show){LQ.push(TH(word));LQ.push(TH(word,true));}
   speak(LQ);
 
   const opts=isTone?TN.map((t,i)=>({h:`<span style="color:var(${t.c});font-weight:700">${t.ko}</span> <span class="th">${t.th}</span>`,i}))
-                   :st.options.map((o,i)=>({h:esc(o),i}));
-  bar(`<div class="grid ${isTone?'':(opts.length===3?'one':'')}">${opts.map(o=>`<button class="btn opt" data-i="${o.i}">${o.h}</button>`).join('')}
+                   :st.options.map((o,i)=>({h:/[\u0E00-\u0E7F]/.test(o)?`<span class="th">${esc(o)}</span>`:esc(o),i}));
+  const gcls=isTone?'':(opts.length===3?'one':'');
+  bar(`<div class="grid ${gcls}">${opts.map(o=>`<button class="btn opt" data-i="${o.i}">${o.h}</button>`).join('')}
      ${isTone?'<button class="btn" id="qa">🔊 다시</button>':''}</div>`);
   if($('qa'))$('qa').onclick=()=>speak([TH(word)]);
   L.total++;
@@ -935,16 +1058,22 @@ function doQuiz(st){
     if(pickI===st.ans){
       b.classList.add('ok');
       if(tries===1)L.score++;
-      qMark.outerHTML=`<div class="chips" style="justify-content:center">${st.word.map(chipHTML).join('')}</div>`;
-      card.querySelectorAll('.chip').forEach(c=>c.onclick=()=>speak([TH(c.dataset.t,true)]));
+      if(hasWord){
+        qMark.outerHTML=`<div class="chips" style="justify-content:center">${st.word.map(chipHTML).join('')}</div>`;
+        card.querySelectorAll('.chip').forEach(c=>c.onclick=()=>speak([TH(c.dataset.t,true)]));
+      }
       const p=PRAISE_QUIZ[Math.floor(Math.random()*PRAISE_QUIZ.length)];
-      const ansTxt=isTone?`${word} = ${TN[st.ans].ko} (${TN[st.ans].th})${st.mean?' · 뜻: '+st.mean:''}`:`${word} = ${st.options[st.ans]}`;
+      const ansTxt=st.explain||(isTone?`${word} = ${TN[st.ans].ko} (${TN[st.ans].th})${st.mean?' · 뜻: '+st.mean:''}`
+                                      :`${st.show||word} = ${st.options[st.ans]}`);
       addFriend(p,`<div class="ans th">${esc(ansTxt)}</div>`);
+      if(hasWord&&st.show)speak([TH(word)]);
       nextBar(null);
     }else{
       b.classList.add('bad');b.disabled=true;
       addFriend(WRONG,null,{});
-      speak([...(set.auto==='on'&&set.mode==='kr'?[KO(WRONG.kr)]:set.auto==='on'?[TH(WRONG.th)]:[]),TH(word,true)]);
+      const W=set.auto==='on'?(set.mode==='kr'?[KO(WRONG.kr)]:[TH(WRONG.th)]):[];
+      if(hasWord&&!st.show)W.push(TH(word,true));
+      speak(W);
     }
   });
 }
